@@ -1,0 +1,21 @@
+name: Unpack
+on: workflow_dispatch
+permissions:
+  contents: write
+jobs:
+  unpack:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Unpack
+        run: |
+          unzip -q "Windows 11.zip" -d /tmp/x
+          rm "Windows 11.zip"
+          cp -a "/tmp/x/Windows 11/." .
+      - name: Commit
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@users.noreply.github.com"
+          git add -A
+          git commit -m "Unpack Windows 11"
+          git push
