@@ -1654,7 +1654,7 @@ PAGES.push({r:function(c,next){
   $('oms').onclick=function(){
     if(!ci.value.trim()&&ci.style.display==='none'){ci.style.display='block';ci.focus();$('oerr').textContent='Enter the Application (client) ID of your Azure app registration, then select the button again.';return}
     $('oerr').textContent='';$('omst').textContent='Waiting for Microsoft…';
-    msSignIn(ci.value).then(function(a){st.ms=a;st.user=a.name;i.value=a.name;if(a.img){st.avatarImg=a.img;prev()}$('omst').textContent='Signed in as '+(a.email||a.name)+' ✓'},function(e){$('omst').textContent='Sign up with Microsoft';ci.style.display='block';$('oerr').textContent=e.message})};
+    msSignIn(ci.value).then(function(a){st.ms=a;st.user=a.name;i.value=a.name;if(a.img){st.avatarImg=a.img;prev()}$('omst').textContent='Signed in as '+(a.email||a.name)+' ✓'},function(e){$('omst').textContent='Sign up with Microsoft';if(!window.WINDOPE_MS_CLIENT_ID)ci.style.display='block';$('oerr').textContent=e.message})};
   function nx(){
     if(mode==='ms'){if(!st.ms){$('oerr').textContent='Sign in with Microsoft to continue, or choose a local account.';return}st.user=st.ms.name;next();return}
     var v=i.value.trim();if(!v){$('oerr').textContent='Enter a name for your account.';return}if(/[\\\/\[\]:;|=,+*?<>"@]/.test(v)){$('oerr').textContent='The name can’t include special characters.';return}st.ms=null;st.user=v;next()}
@@ -1804,7 +1804,7 @@ window.msSignIn=function(cid){
     return fetch('https://graph.microsoft.com/v1.0/me',{headers:H}).then(function(r){return r.json()}).then(function(me){
       return fetch('https://graph.microsoft.com/v1.0/me/photo/$value',{headers:H}).then(function(r){return r.ok?r.blob():null}).catch(function(){return null}).then(function(bl){
         return(bl?resizeAvatar(bl).catch(function(){return''}):Promise.resolve('')).then(function(img){return{name:me.displayName||'User',email:me.mail||me.userPrincipalName||'',img:img,tk:tk}})})})
-  }).then(function(acct){updateSysSetting('msClientId',cid);var t=acct.tk;delete acct.tk;return serverLogin(t).then(function(st){acct.srvToken=st;return acct},function(){acct.srvToken='';return acct})});
+  }).then(function(acct){if(cid!==window.WINDOPE_MS_CLIENT_ID)updateSysSetting('msClientId',cid);var t=acct.tk;delete acct.tk;return serverLogin(t).then(function(st){acct.srvToken=st;return acct},function(){acct.srvToken='';return acct})});
 };
 window.msApply=function(a){updateSysSetting('userName',a.name);updateSysSetting('userEmail',a.email);updateSysSetting('accountType','Microsoft account');if(a.img)updateSysSetting('avatarImg',a.img);updateSysSetting('srvToken',a.srvToken||'');updateSysSetting('msLinked',true);applyUser()};
 
