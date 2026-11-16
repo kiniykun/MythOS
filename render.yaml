@@ -2,12 +2,10 @@ services:
   - type: web
     name: windope
     runtime: docker
+    plan: free
     dockerfilePath: ./server/Dockerfile
     dockerContext: .
     envVars:
       - key: ADMIN_KEY
         generateValue: true
-    disk:
-      name: windope-data
-      mountPath: /data
-      sizeGB: 1
+
