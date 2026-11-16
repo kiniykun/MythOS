@@ -1,0 +1,212 @@
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Windows 11</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2032%2032%22%3E%3Cg%20fill%3D%22%230a84ff%22%3E%3Crect%20x%3D%223%22%20y%3D%223%22%20width%3D%2212.500%22%20height%3D%2212.500%22%20rx%3D%221.200%22/%3E%3Crect%20x%3D%2216.500%22%20y%3D%223%22%20width%3D%2212.500%22%20height%3D%2212.500%22%20rx%3D%221.200%22/%3E%3Crect%20x%3D%223%22%20y%3D%2216.500%22%20width%3D%2212.500%22%20height%3D%2212.500%22%20rx%3D%221.200%22/%3E%3Crect%20x%3D%2216.500%22%20y%3D%2216.500%22%20width%3D%2212.500%22%20height%3D%2212.500%22%20rx%3D%221.200%22/%3E%3C/g%3E%3C/svg%3E">
+  <link rel="apple-touch-icon" href="Icons/windows.svg">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@900&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet">
+  
+  
+  <script src="windope-config.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js" defer></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Inter:wght@400;600&family=Poppins:wght@400;600&family=Space+Grotesk:wght@400;600&family=Fredoka:wght@400;600&family=Comic+Neue:wght@400;700&family=Playfair+Display:wght@400;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body id="desktop-area" role="application">
+
+<!-- accessibility wrapper for screen readers -->
+<div id="fps-counter" aria-live="polite"><span id="fps-val">60</span> FPS</div>
+
+<dialog id="mobile-warning" aria-modal="true">
+  <div class="mobile-box">
+    <i class="fas fa-exclamation-triangle" aria-hidden="true"></i>
+    <h2>Device is not fully supported</h2>
+    <p>Double tap anywhere to continue</p>
+  </div>
+</dialog>
+
+<div id="top-trigger" aria-hidden="true"></div>
+<div id="bottom-trigger" aria-hidden="true"></div>
+
+<section id="boot-layer" aria-label="Windows 11 startup">
+  <div id="win-boot">
+    <svg class="win-logo" viewBox="0 0 88 88" aria-hidden="true"><g fill="#0078d4"><rect x="0" y="0" width="42" height="42"/><rect x="46" y="0" width="42" height="42"/><rect x="0" y="46" width="42" height="42"/><rect x="46" y="46" width="42" height="42"/></g></svg>
+    <div class="win-spin"><i></i><i></i><i></i><i></i><i></i></div>
+  </div>
+</section>
+
+<main id="lock-screen" onclick="unlockSystem()" role="presentation">
+  <div id="lock-bloom" aria-hidden="true"></div>
+  <video id="lock-video" preload="auto" autoplay loop muted playsinline aria-hidden="true"></video>
+  <img id="lock-img" class="media__fallback" alt="Lockscreen Background">
+  
+ <article id="lock-ui">
+    <div class="lock-content">
+      <div class="l-day" id="lock-day-large">FRIDAY</div>
+      <div class="l-date" id="lock-date">03 APRIL, 2026.</div>
+      <div class="l-time" id="lock-time">08:43</div>
+    </div>
+    <div class="lock-hint"><span></span>Click anywhere or press a key to sign in</div>
+  </article>
+</main>
+
+<!-- Base OS Backgrounds -->
+<div id="wp-fallback" aria-hidden="true"></div>
+<div id="wp-bloom" aria-hidden="true"></div>
+<video id="bg-video" preload="auto" loop muted playsinline aria-hidden="true"></video>
+<img id="bg-img" class="media__fallback" alt="Desktop Background">
+<div id="wp-wash" aria-hidden="true"></div>
+<canvas id="snow-fx" aria-hidden="true"></canvas>
+
+<header id="hud-top">
+  <div class="hud-day" id="lbl-day">FRIDAY</div>
+</header>
+
+
+
+<div id="drag-proxy" aria-hidden="true">
+  <div id="folder-badge" class="hidden-badge">2</div>
+  <img id="proxy-img" src="" alt="Dragging">
+</div>
+
+<!-- Taskbar -->
+<nav id="dock-container" aria-label="System Taskbar"></nav>
+<section id="windows-layer" aria-live="assertive"></section>
+
+<!-- Modals -->
+<dialog id="wallpaper-menu" aria-label="Wallpaper Settings">
+  <header class="wp-modal-header">
+    <h2>Personalization &rsaquo; Background</h2>
+    <i class="fas fa-times close-icon" role="button" tabindex="0" onclick="var menu = document.getElementById('wallpaper-menu'); menu.classList.remove('open'); if (menu.close) { menu.close(); }"></i>
+  </header>
+  
+  <div class="wp-controls-row">
+    <fieldset class="segmented-control">
+      <label><input type="radio" name="wpmd" value="both" checked onclick="window.wpMode='both'"><span>Both</span></label>
+      <label><input type="radio" name="wpmd" value="home" onclick="window.wpMode='home'"><span>Homescreen</span></label>
+      <label><input type="radio" name="wpmd" value="lock" onclick="window.wpMode='lock'"><span>Lockscreen</span></label>
+    </fieldset>
+    
+    <div class="loop-toggle-container">
+      <span class="loop-label">Adapt to light mode</span>
+      <label class="switch wp-loop-switch"><input type="checkbox" id="wp-adapt-chk" checked><span class="slider"></span></label>
+      <span class="loop-label" style="margin-left:14px">Loop</span>
+      <label class="switch wp-loop-switch">
+        <input type="checkbox" id="wp-loop-chk">
+        <span class="slider"></span>
+      </label>
+    </div>
+  </div>
+
+  <div class="wp-grid-container">
+    <div id="wp-grid-unlocked" class="wp-grid"></div>
+    <div id="wp-grid-locked" class="wp-grid" style="display:none"></div>
+  </div>
+</dialog>
+
+
+
+<!-- Desktop icons -->
+<div id="desk-icons">
+  <div class="d-ico" data-app="explorer" data-place="thispc" tabindex="0"><img src="Icons/pc.svg" alt=""><span>This PC</span></div>
+  <div class="d-ico" id="d-bin" data-app="explorer" data-place="bin" tabindex="0"><img src="Icons/bin.svg" alt=""><span>Recycle Bin</span></div>
+</div>
+<!-- Widgets -->
+<div id="wid-btn" title="Widgets"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="8" height="8" rx="2" fill="#4cc2ff"/><rect x="13" y="3" width="8" height="8" rx="2" fill="#a78bfa"/><rect x="3" y="13" width="8" height="8" rx="2" fill="#34d399"/><rect x="13" y="13" width="8" height="8" rx="2" fill="#fbbf24"/></svg><div><b id="wb-day">Sunday</b><small id="wb-date">Nov 8</small></div></div>
+<div class="flyout" id="wid-panel">
+  <div class="wd-hello"><div><small id="wd-greet">Good evening</small><b id="wd-time">00:00</b></div><div class="wd-date" id="wd-date"></div></div>
+  <div class="wd-card"><div class="wd-h">Focus timer</div><div class="wd-timer" id="wd-tm">25:00</div>
+    <div class="wd-btns"><button id="wd-go">Start</button><button id="wd-rs">Reset</button><select id="wd-len"><option value="25">25 min</option><option value="15">15 min</option><option value="50">50 min</option><option value="5">5 min</option></select></div>
+    <div class="wd-bar"><i id="wd-pb"></i></div></div>
+  <div class="wd-card"><div class="wd-h">Quick notes</div><textarea id="wd-note" placeholder="Jot something down. It saves automatically."></textarea></div>
+  <div class="wd-card"><div class="wd-h">This device</div><div class="wd-stats"><div><b id="wd-cpu">-</b><small>Cores</small></div><div><b id="wd-mem">-</b><small>Memory</small></div><div><b id="wd-bat">-</b><small>Battery</small></div></div></div>
+</div>
+<!-- Windows 11 system tray & flyouts -->
+<div id="tray">
+  <div class="tray-btn" id="tray-qs" title="Quick settings">
+    <svg viewBox="0 0 24 24"><path d="M2 9a15 15 0 0 1 20 0M5 12.5a10 10 0 0 1 14 0M8.5 16a5 5 0 0 1 7 0"/><circle cx="12" cy="19.5" r="1"/></svg>
+    <svg viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9z"/><path d="M16 9a4 4 0 0 1 0 6M18.5 6.5a8 8 0 0 1 0 11"/></svg>
+    <svg viewBox="0 0 24 24"><rect x="2" y="7" width="17" height="10" rx="2"/><path d="M22 10v4"/><rect x="4" y="9" width="10" height="6" fill="currentColor" stroke="none"/></svg>
+  </div>
+  <div class="tray-btn" id="tray-clock" title="Calendar"><span id="tc-time">12:00 AM</span><span id="tc-date">1/1/2026</span></div>
+  <div class="tray-btn" id="tray-show" title="Show desktop"></div>
+</div>
+<div class="flyout" id="qs-panel">
+  <div class="qs-tiles" id="qs-tiles"></div>
+  <div class="qs-row"><span><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M4.9 19.1L7 17M17 7l2.1-2.1"/></svg></span><input type="range" id="qs-bright" min="40" max="100" value="100"></div>
+  <div class="qs-row"><span><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9v6h4l5 4V5L8 9z"/><path d="M16 9a4 4 0 0 1 0 6M18.5 6.5a8 8 0 0 1 0 11"/></svg></span><input type="range" id="qs-vol" min="0" max="100" value="100"></div>
+  <div class="qs-foot"><span id="qs-batt">Battery</span><button onclick="openWindow('settings');closeFlyouts()"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2.5v3M12 18.5v3M2.5 12h3M18.5 12h3M5.3 5.3l2.1 2.1M16.6 16.6l2.1 2.1M5.3 18.7l2.1-2.1M16.6 7.4l2.1-2.1"/></svg> Settings</button></div>
+</div>
+<div class="flyout" id="cal-panel">
+  <div class="cal-big" id="cal-big"></div><div class="cal-sub" id="cal-sub"></div>
+  <div class="cal-head"><b id="cal-title"></b><div><button id="cal-prev">&#8249;</button><button id="cal-next">&#8250;</button></div></div>
+  <div class="cal-grid" id="cal-grid"></div>
+</div>
+<div id="night-overlay"></div>
+<aside id="start-menu" class="os-menu" aria-label="Start Menu">
+  <div class="start-search-bar">
+    <i class="fas fa-search search-icon" aria-hidden="true"></i>
+    <input type="text" id="start-search-input" placeholder="Type here to search" aria-label="Search Settings">
+  </div>
+  <header class="pinned-header">
+    <h3>Pinned</h3><button class="all-apps" onclick="toggleStartMenu();toggleAppDrawer()">All apps &#8250;</button>
+  </header>
+  <div class="pinned-grid" id="pinned-grid"></div>
+  <header class="pinned-header"><h3>Recommended</h3></header>
+  <div class="rec-grid" id="rec-grid"></div>
+  <footer class="start-footer">
+    <div class="user-profile">
+      <div class="user-avatar"><svg viewBox="0 0 24 24" width="20" height="20" fill="#fff"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7z"/></svg></div>
+      <span class="user-role">Administrator</span>
+    </div>
+    <span class="power-btn" role="button" tabindex="0" onclick="event.stopPropagation();togglePower()" aria-label="Power"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><path d="M12 3v9M6.5 6.5a8 8 0 1 0 11 0"/></svg></span>
+    <div id="power-pop"><div onclick="lockNow()">Lock</div><div onclick="location.reload()">Restart</div><div onclick="location.reload()">Shut down</div></div>
+  </footer>
+</aside>
+
+<dialog id="app-drawer" aria-label="All Applications" onclick="if(event.target.id==='app-drawer')toggleAppDrawer()">
+  <div class="drawer-search-wrap">
+    <i class="fas fa-search search-icon" aria-hidden="true"></i>
+    <input type="text" class="drawer-search-input" placeholder="Search apps..." onkeyup="filterDrawer(this.value)">
+  </div>
+  <div class="drawer-grid" id="drawer-grid"></div>
+</dialog>
+
+<!-- Context Menus (Refactored to semantic <menu> tags) -->
+<menu id="app-context-menu" class="os-context-menu" role="menu"></menu>
+
+<menu id="drawer-ctx-menu" class="os-context-menu" role="menu">
+    <li class="ctx-item" id="ctx-pin-app" role="menuitem" tabindex="0"><i class="fas fa-thumbtack fa-fw" aria-hidden="true"></i> Pin to Taskbar</li>
+</menu>
+
+<menu id="dock-ctx-menu" class="os-context-menu" role="menu">
+    <li class="ctx-item" id="ctx-unpin-app" role="menuitem" tabindex="0"><i class="fas fa-unlink fa-fw" aria-hidden="true"></i> Unpin from Taskbar</li>
+</menu>
+
+<menu id="desktop-context-menu" class="os-context-menu" role="menu">
+  <li class="ctx-item" role="menuitem" tabindex="0" onclick="openWallpaperMenu(); document.getElementById('desktop-context-menu').style.display='none';"><i class="fas fa-image fa-fw"></i> Change Wallpaper</li>
+  <li class="ctx-separator" role="separator"></li>
+  <li class="ctx-row" role="none">
+    <button class="ctx-btn" onclick="toggleDesktopSize(true)" title="Large Icons (Hide Names)"><i class="fas fa-expand-arrows-alt"></i></button>
+    <button class="ctx-btn" onclick="toggleDesktopSize(false)" title="Default Size"><i class="fas fa-compress-arrows-alt"></i></button>
+  </li>
+  <li class="ctx-separator" role="separator"></li>
+  <li class="ctx-item" role="menuitem" tabindex="0" onclick="location.reload()"><i class="fas fa-sync fa-fw"></i> Refresh System</li>
+</menu>
+
+<div id="toast-container" aria-live="polite"></div>
+
+<!-- OOBE (out-of-box experience) -->
+<div id="oobe" aria-live="polite"><div id="ocard" class="ocard"></div><div class="ostat" id="ostat"></div></div>
+
+<script src="inline-apps.js"></script>
+<script src="script.js"></script>
+<script src="extras.js"></script>
+<script src="winx.js"></script>
+<script src="update.js"></script>
+</body>
+</html>

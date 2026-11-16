@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><defs>
+<linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#c3ccd6"/><stop offset=".5" stop-color="#8b97a4"/><stop offset="1" stop-color="#58626e"/></linearGradient>
+<linearGradient id="h" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2a3038"/><stop offset="1" stop-color="#14181d"/></linearGradient></defs>
+<path d="M53.07 27.73 L58.77 28.50 L58.77 35.50 L53.07 36.27 L49.92 43.88 L53.41 48.46 L48.46 53.41 L43.88 49.92 L36.27 53.07 L35.50 58.77 L28.50 58.77 L27.73 53.07 L20.12 49.92 L15.54 53.41 L10.59 48.46 L14.08 43.88 L10.93 36.27 L5.23 35.50 L5.23 28.50 L10.93 27.73 L14.08 20.12 L10.59 15.54 L15.54 10.59 L20.12 14.08 L27.73 10.93 L28.50 5.23 L35.50 5.23 L36.27 10.93 L43.88 14.08 L48.46 10.59 L53.41 15.54 L49.92 20.12Z" fill="url(#g)" stroke="#434b55" stroke-width="1" stroke-linejoin="round"/>
+<circle cx="32" cy="32" r="15.5" fill="none" stroke="#e8edf3" stroke-opacity=".55" stroke-width="1.5"/>
+<circle cx="32" cy="32" r="11" fill="url(#h)" stroke="#e8edf3" stroke-opacity=".35" stroke-width="1"/>
+<circle cx="32" cy="32" r="3.2" fill="#6d7783"/></svg>

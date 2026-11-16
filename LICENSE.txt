@@ -1,0 +1,19 @@
+Windows 11 Software License Agreement
+
+Copyright © 2026 kiniykun. All rights reserved.
+
+This Software, including but not limited to its source code, design, functionality, structure, and associated content (collectively, the “Software”), is the exclusive intellectual property of kiniykun and is protected under applicable copyright and intellectual property laws.
+
+No license is granted to anyone other than kiniykun. You may not, without kiniykun’s prior written permission:
+
+- Copy, reproduce, distribute, republish, or transmit the Software or any part of it, including its code
+- Modify, adapt, translate, reverse engineer, decompile, or create derivative works based on the Software
+- Reuse any of its code, design or content in another project
+- Mirror, frame, scrape, or otherwise replicate the Software on any server, platform, or service
+- Use the Software, in whole or in part, for any commercial purpose
+
+Any unauthorized use of the Software violates this Agreement and may result in legal action, including takedown requests under the Digital Millennium Copyright Act (DMCA).
+
+kiniykun reserves all rights not expressly granted herein.
+
+Windows is a trademark of Microsoft. This project is an independent fan project and is not affiliated with, endorsed by or connected to Microsoft.

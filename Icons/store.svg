@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><defs>
+<linearGradient id="bag" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#d9dfe8"/></linearGradient>
+<linearGradient id="bk" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#eef2f7"/><stop offset="1" stop-color="#c3ccd8"/></linearGradient>
+<linearGradient id="w" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#4fc3ff"/><stop offset="1" stop-color="#0a64d8"/></linearGradient>
+<filter id="sh" x="-20%" y="-20%" width="140%" height="150%"><feDropShadow dx="0" dy="1.5" stdDeviation="1.4" flood-color="#1b2a44" flood-opacity=".35"/></filter></defs>
+<g filter="url(#sh)">
+<path d="M21 20v-4a11 11 0 0 1 22 0v4" fill="none" stroke="#9aa6b6" stroke-width="4.2" stroke-linecap="round" transform="translate(0 3)"/>
+<path d="M21 20v-4a11 11 0 0 1 22 0v4" fill="none" stroke="#e4e9f0" stroke-width="2.2" stroke-linecap="round" transform="translate(0 3)"/>
+<path d="M9 21h46l-2.600 31a5 5 0 0 1-5 4.600H16.600a5 5 0 0 1-5-4.600z" fill="url(#bag)" stroke="#aeb8c6" stroke-width="1"/>
+<path d="M9 21h46l-.4 4.600H9.400z" fill="url(#bk)"/></g>
+<g fill="url(#w)"><rect x="21.500" y="29" width="9.800" height="9.800" rx="1"/><rect x="32.700" y="29" width="9.800" height="9.800" rx="1"/><rect x="21.500" y="40.200" width="9.800" height="9.800" rx="1"/><rect x="32.700" y="40.200" width="9.800" height="9.800" rx="1"/></g></svg>

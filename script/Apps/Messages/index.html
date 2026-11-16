@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Messages</title>
+<style>
+:root{--accent:#4cc2ff;--onacc:#000;--bg:#1c1c1e;--side:#232326;--card:#2b2b2f;--line:rgba(255,255,255,.09);--fg:#f3f3f5;--mut:rgba(235,235,245,.6);--hover:rgba(255,255,255,.07);--ctl:rgba(255,255,255,.06);--ok:#5ee09a;--err:#ff8a90;--font:"Segoe UI Variable Text","Segoe UI",system-ui,sans-serif}
+html.light{--bg:#f6f6f8;--side:#ececf0;--card:#fff;--line:rgba(0,0,0,.09);--fg:#1a1a1c;--mut:rgba(0,0,0,.55);--hover:rgba(0,0,0,.05);--ctl:#fff;--ok:#0f7b3f;--err:#c42b1c}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{font:14px/1.4 var(--font);background:var(--bg);color:var(--fg);display:flex;overflow:hidden}
+button{font:inherit;color:var(--fg);background:var(--ctl);border:0;border-radius:4px;height:32px;padding:0 14px;cursor:pointer;box-shadow:inset 0 0 0 1px var(--line)}
+button:hover{background:var(--hover)}button.pri{background:var(--accent);color:var(--onacc);box-shadow:none}button.pri:hover{filter:brightness(1.1)}button.dng{color:var(--err)}
+button:disabled{opacity:.55;cursor:default}
+input{font:inherit;color:var(--fg);background:var(--ctl);border:0;border-radius:4px;height:32px;padding:0 10px;box-shadow:inset 0 0 0 1px var(--line),inset 0 -1px 0 var(--mut);outline:none;min-width:0}
+input:focus{box-shadow:inset 0 0 0 1px var(--line),inset 0 -2px 0 var(--accent)}
+nav{width:250px;flex:none;background:var(--side);border-right:1px solid var(--line);display:flex;flex-direction:column;min-height:0}
+nav h2{font-size:18px;font-weight:600;padding:16px 16px 4px}
+.stat{padding:0 16px 10px;color:var(--mut);font-size:12px;display:flex;align-items:center;gap:6px}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--mut);flex:none}.dot.on{background:var(--ok)}.dot.off{background:var(--err)}
+#list{flex:1;overflow:auto;padding:0 8px;min-height:0}
+.sv{display:flex;align-items:center;gap:10px;height:44px;padding:0 10px;border-radius:4px;cursor:pointer;position:relative}
+.sv:hover{background:var(--hover)}.sv.on{background:var(--hover)}.sv.on::before{content:"";position:absolute;left:0;top:12px;bottom:12px;width:3px;border-radius:2px;background:var(--accent)}
+.ic{width:28px;height:28px;border-radius:7px;background:var(--accent);color:var(--onacc);display:grid;place-items:center;font-weight:700;font-size:13px;flex:none}
+.sv b{display:block;font-weight:400;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.sv small{color:var(--mut);font-size:11.5px}
+.sv div{min-width:0}
+.mk{padding:10px;border-top:1px solid var(--line);display:flex;gap:6px}.mk input{flex:1}
+main{flex:1;display:flex;flex-direction:column;min-width:0;min-height:0}
+header{height:56px;flex:none;display:flex;align-items:center;gap:12px;padding:0 18px;border-bottom:1px solid var(--line)}
+header h3{font-size:16px;font-weight:600;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}header small{color:var(--mut);font-size:12px}
+#msgs{flex:1;overflow:auto;padding:14px 18px;display:flex;flex-direction:column;gap:2px;min-height:0}
+.m{display:flex;gap:10px;padding:5px 8px;border-radius:6px}.m:hover{background:var(--hover)}
+.av{width:34px;height:34px;border-radius:50%;background:var(--card);box-shadow:inset 0 0 0 1px var(--line);display:grid;place-items:center;font-weight:600;flex:none}
+.m.me .av{background:var(--accent);color:var(--onacc);box-shadow:none}
+.m .h{font-size:13px}.m .h b{font-weight:600}.m .h span{color:var(--mut);font-size:11.5px;margin-left:6px}
+.m .h i{font-style:normal;font-size:10.5px;background:var(--accent);color:var(--onacc);border-radius:3px;padding:0 5px;margin-left:6px}
+.m .x{white-space:pre-wrap;word-break:break-word}.sys .x{color:var(--mut);font-style:italic}
+form.send{display:flex;gap:8px;padding:12px 18px;border-top:1px solid var(--line)}form.send input{flex:1;height:36px}
+.empty{margin:auto;text-align:center;color:var(--mut);max-width:320px;padding:20px}.empty h3{color:var(--fg);font-size:18px;margin-bottom:6px}.empty button{margin-top:14px}
+#err{position:absolute;left:50%;bottom:64px;transform:translateX(-50%);background:var(--card);box-shadow:0 4px 18px rgba(0,0,0,.35),inset 0 0 0 1px var(--line);color:var(--err);border-radius:6px;padding:8px 14px;font-size:13px;display:none;max-width:80%}
+</style></head><body>
+<nav>
+  <h2>Messages</h2>
+  <div class="stat"><span class="dot" id="dot"></span><span id="stat">Connecting…</span></div>
+  <div id="list"></div>
+  <form class="mk" id="mk"><input id="mkn" placeholder="New server name" maxlength="24" autocomplete="off"><button class="pri" id="mkb" type="submit">Create</button></form>
+</nav>
+<main id="main"></main>
+<div id="err"></div>
+<script>
+(function(){
+'use strict';
+var P=window.parent,cfg=P.sysConfig||{},$=function(i){return document.getElementById(i)};
+var cur=null,last=0,servers=[],pollM=0,pollL=0,seen={};
+function base(){try{return P.serverBase()}catch(e){return location.origin}}
+function tok(){return (P.sysConfig||{}).srvToken||''}
+function accent(){var a=(P.sysConfig||{}).accent;if(/^#[0-9a-f]{6}$/i.test(a||'')){document.documentElement.style.setProperty('--accent',a);var n=parseInt(a.slice(1),16),L=.299*(n>>16)+.587*((n>>8)&255)+.114*(n&255);document.documentElement.style.setProperty('--onacc',L<150?'#fff':'#000')}}
+function theme(){document.documentElement.classList.toggle('light',(P.sysConfig||{}).theme==='light')}
+function api(path,opt){opt=opt||{};opt.headers=Object.assign({'Content-Type':'application/json'},tok()?{Authorization:'Bearer '+tok()}:{},opt.headers||{});
+ return fetch(base()+path,opt).then(function(r){return r.json().catch(function(){return{}}).then(function(j){if(!r.ok){var e=new Error(j.error||'Something went wrong.');e.code=r.status;throw e}return j})},function(){throw new Error('Can’t reach the Windows 11 server. Start it with start-server.bat / start-server.sh.')})}
+var et=0;function err(t){var e=$('err');e.textContent=t;e.style.display='block';clearTimeout(et);et=setTimeout(function(){e.style.display='none'},4000)}
+function el(t,c,x){var e=document.createElement(t);if(c)e.className=c;if(x!=null)e.textContent=x;return e}
+function hhmm(t){var d=new Date(t);return d.toLocaleTimeString([],{hour:'numeric',minute:'2-digit'})}
+
+function signedOut(){cur=null;$('list').innerHTML='';$('mk').style.display='none';var m=$('main');m.innerHTML='';
+ var w=el('div','empty');w.appendChild(el('h3',0,'Sign in to use Messages'));w.appendChild(el('p',0,'Messages are shared chat spaces hosted by this Windows 11. Sign in with your Microsoft account to join them, create your own and chat.'));
+ var b=el('button','pri','Sign in with Microsoft');b.onclick=function(){b.disabled=true;P.msSignIn().then(function(a){if(!a.srvToken)throw new Error('Signed in, but the Windows 11 server couldn’t be reached. Check its address in Settings > Accounts.');P.msApply(a);boot()},function(e){err(e.message);b.disabled=false})};w.appendChild(b);m.appendChild(w)}
+
+function status(){return fetch(base()+'/api/status',{headers:tok()?{Authorization:'Bearer '+tok()}:{}}).then(function(r){return r.json()}).then(function(j){
+  $('dot').className='dot on';var u=j.uptimeSec||0,t=u<90?u+'s':u<5400?Math.round(u/60)+' min':Math.round(u/3600)+' h';
+  $('stat').textContent='Windows 11 server online · up '+t+(j.accounts!=null?' · '+j.accounts+' account'+(j.accounts===1?'':'s'):'')},function(){$('dot').className='dot off';$('stat').textContent='Server offline'})}
+
+function drawList(){var l=$('list');l.innerHTML='';servers.forEach(function(s){var r=el('div','sv'+(cur&&cur.id===s.id?' on':''));r.appendChild(el('div','ic',s.name.slice(0,1).toUpperCase()));var d=el('div');d.appendChild(el('b',0,s.name));d.appendChild(el('small',0,s.count+(s.count===1?' message':' messages')));r.appendChild(d);r.onclick=function(){open(s)};l.appendChild(r)})}
+function loadList(){return api('/api/servers').then(function(j){servers=j.servers;if(cur){var f=servers.filter(function(s){return s.id===cur.id})[0];if(f)cur=f;else{cur=null;drawMain()}}drawList()})}
+
+function drawMain(){var m=$('main');m.innerHTML='';
+ if(!cur){var w=el('div','empty');w.appendChild(el('h3',0,'Pick a server'));w.appendChild(el('p',0,'Choose one on the left, or create your own.'));m.appendChild(w);return}
+ var h=el('header');h.appendChild(el('h3',0,'# '+cur.name));h.appendChild(el('small',0,'by '+cur.ownerName));
+ if(cur.mine){var d=el('button','dng','Delete server');d.onclick=function(){if(!confirm('Delete “'+cur.name+'” and all its messages?'))return;api('/api/servers/'+cur.id+'/delete',{method:'POST',body:'{}'}).then(function(){cur=null;drawMain();loadList()},function(e){err(e.message)})};h.appendChild(d)}
+ m.appendChild(h);var box=el('div');box.id='msgs';m.appendChild(box);
+ var f=el('form','send'),i=el('input');i.placeholder='Message # '+cur.name;i.maxLength=500;i.autocomplete='off';f.appendChild(i);var b=el('button','pri','Send');b.type='submit';f.appendChild(b);
+ f.onsubmit=function(e){e.preventDefault();var t=i.value.trim();if(!t)return;i.value='';api('/api/servers/'+cur.id+'/messages',{method:'POST',body:JSON.stringify({text:t})}).then(function(){poll()},function(er){err(er.message);i.value=t})};m.appendChild(f);i.focus()}
+function addMsgs(list){var box=$('msgs');if(!box)return;var stick=box.scrollHeight-box.scrollTop-box.clientHeight<60;
+ list.forEach(function(x){if(seen[x.id])return;seen[x.id]=1;last=Math.max(last,x.id);var sys=x.u==='Windows 11',me=x.u===(P.sysConfig||{}).userName&&!sys;var r=el('div','m'+(me?' me':'')+(sys?' sys':''));
+  r.appendChild(el('div','av',(x.u||'?').slice(0,1).toUpperCase()));var c=el('div'),h=el('div','h');h.appendChild(el('b',0,x.u));if(x.e==='owner')h.appendChild(el('i',0,'owner'));h.appendChild(el('span',0,hhmm(x.t)));c.appendChild(h);c.appendChild(el('div','x',x.text));r.appendChild(c);box.appendChild(r)});
+ if(stick)box.scrollTop=box.scrollHeight}
+function poll(){if(!cur)return Promise.resolve();var id=cur.id;return api('/api/servers/'+id+'/messages?after='+last).then(function(j){if(!cur||cur.id!==id)return;addMsgs(j.messages)},function(e){if(e.code===401){signedOut();clearInterval(pollM)}})}
+function open(s){cur=s;last=0;seen={};drawMain();drawList();poll()}
+function boot(){clearInterval(pollM);clearInterval(pollL);theme();accent();status();
+ if(!tok())return signedOut();
+ $('mk').style.display='';api('/api/me').then(function(){return loadList()}).then(function(){if(!cur){var l=servers.filter(function(s){return s.id==='s_lounge'})[0]||servers[0];if(l)open(l);else drawMain()}
+  pollM=setInterval(poll,1500);pollL=setInterval(function(){loadList().catch(function(){});status()},6000)},function(e){if(e.code===401){P.msSignOut&&P.msSignOut();signedOut()}else{err(e.message);$('dot').className='dot off'}})}
+$('mk').onsubmit=function(e){e.preventDefault();var n=$('mkn').value.trim();if(!n)return;$('mkb').disabled=true;api('/api/servers',{method:'POST',body:JSON.stringify({name:n})}).then(function(j){$('mkn').value='';return loadList().then(function(){var s=servers.filter(function(x){return x.id===j.server.id})[0];if(s)open(s)})},function(er){err(er.message)}).then(function(){$('mkb').disabled=false})};
+document.addEventListener('visibilitychange',function(){if(!document.hidden&&tok())poll()});
+boot();
+})();
+</script></body></html>

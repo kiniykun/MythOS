@@ -1,0 +1,18 @@
+*{box-sizing:border-box}html,body{min-height:100%}
+body{margin:0;background:#f2f2f2;color:#1b1b1b;font:15px/1.45 "Segoe UI","Segoe UI Variable Text",system-ui,sans-serif;display:flex;flex-direction:column;align-items:center;padding:0 12px 24px}
+.banner{width:calc(100% + 24px);background:#fff4ce;border-bottom:1px solid #e6c84f;color:#3b2f00;padding:10px 16px;text-align:center;font-size:13.5px}
+.card{margin-top:28px;width:min(440px,100%);background:#fff;box-shadow:0 2px 6px rgba(0,0,0,.2),0 0 2px rgba(0,0,0,.12);padding:40px 44px 36px}
+.logo{display:flex;align-items:center;gap:8px;font-weight:600;font-size:18px;color:#5e5e5e;margin-bottom:18px}
+h1{font-size:24px;font-weight:600;margin:0 0 16px}
+input[type=email],input[type=password],input[type=text]{width:100%;height:36px;border:0;border-bottom:1px solid #666;background:transparent;font:inherit;outline:none;margin:0 0 12px;padding:0 2px}
+input[type=email]:focus,input[type=password]:focus,input[type=text]:focus{border-bottom:2px solid #7c3aed}
+.sub{font-size:13px;color:#4b4b4b;margin:4px 0 14px}a{color:#6d28d9;text-decoration:none}a:hover{text-decoration:underline}
+.row{display:flex;gap:8px;justify-content:flex-end;margin-top:18px}
+.btn{min-width:108px;height:32px;border:1px solid #7c3aed;background:#7c3aed;color:#fff;font:inherit;cursor:pointer}.btn:hover{background:#6d28d9}.btn:disabled{opacity:.6;cursor:default}
+.btn.ghost{background:#ccc;border-color:#ccc;color:#1b1b1b}.btn.ghost:hover{background:#bdbdbd}
+.who{font-size:15px;margin-bottom:12px;padding:4px 8px;background:#f2f2f2;display:inline-block}
+.chk{display:flex;gap:8px;align-items:center;font-size:13px;margin:6px 0}.chk.big{align-items:flex-start;background:#fff4ce;border:1px solid #e6c84f;padding:10px;margin-top:8px}.chk input{margin-top:3px}
+.status{min-height:20px;margin:12px 0 0;font-size:13px;color:#4b4b4b}.status.err{color:#a4262c}.status.ok{color:#107c10}
+.foot{max-width:440px;text-align:center;font-size:12px;color:#5b5b5b;margin-top:14px}
+[hidden]{display:none!important}
+@media (max-width:480px){.card{padding:28px 22px}}
