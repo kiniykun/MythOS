@@ -1,4 +1,4 @@
-# MythOS
+# MythOS 11
 
 ### Grand Opening
 
@@ -17,4 +17,4 @@ A full desktop, right in your browser. No install, no downloads. Open it and it'
 - **Settings:** search any setting, tab cloaking, a panic key, accessibility options and more.
 - **Games:** controller support built in.
 
-Welcome to Windows 11.
+Welcome to MythOS 11.
