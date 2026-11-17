@@ -1,6 +1,6 @@
-# Windows 11 server
+# MythOS server
 
-Serves Windows 11 itself, checks Microsoft (Azure / Entra ID) sign-ins, and runs the Messages chat backend and usage info collector.
+Serves MythOS itself, checks Microsoft (Azure / Entra ID) sign-ins, and runs the Messages chat backend and usage info collector.
 There are **no passwords on this server**: the OS signs in with Microsoft, sends the Microsoft access token here once, and the server
 verifies it with Microsoft Graph (`/me`) and returns its own 30-day session token.
 
@@ -28,6 +28,6 @@ POST /api/ms-login {token: Microsoft Graph access token} -> {token,user}
 GET /api/me (Bearer session token) / POST /api/logout
 
 ## Messages (chat servers inside the OS)
-Signed-in users can create servers (up to 5 each), chat in near-real-time and delete the ones they own. A "Windows 11 Lounge" server exists by default.
+Signed-in users can create servers (up to 5 each), chat in near-real-time and delete the ones they own. A "MythOS Lounge" server exists by default.
 Messages are plain text, up to 500 characters, last 500 kept per server. Data: `server/data/servers.json`.
 Extra API: GET /api/status, GET/POST /api/servers, GET/POST /api/servers/:id/messages, POST /api/servers/:id/delete

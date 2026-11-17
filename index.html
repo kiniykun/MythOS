@@ -2,9 +2,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Windows 11</title>
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2032%2032%22%3E%3Cg%20fill%3D%22%230a84ff%22%3E%3Crect%20x%3D%223%22%20y%3D%223%22%20width%3D%2212.500%22%20height%3D%2212.500%22%20rx%3D%221.200%22/%3E%3Crect%20x%3D%2216.500%22%20y%3D%223%22%20width%3D%2212.500%22%20height%3D%2212.500%22%20rx%3D%221.200%22/%3E%3Crect%20x%3D%223%22%20y%3D%2216.500%22%20width%3D%2212.500%22%20height%3D%2212.500%22%20rx%3D%221.200%22/%3E%3Crect%20x%3D%2216.500%22%20y%3D%2216.500%22%20width%3D%2212.500%22%20height%3D%2212.500%22%20rx%3D%221.200%22/%3E%3C/g%3E%3C/svg%3E">
-  <link rel="apple-touch-icon" href="Icons/windows.svg">
+  <title>MythOS</title>
+  <link rel="icon" type="image/png" href="Icons/mythos.png">
+  <link rel="apple-touch-icon" href="Icons/mythos.png">
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@900&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet">
   
   
@@ -32,9 +32,9 @@
 <div id="top-trigger" aria-hidden="true"></div>
 <div id="bottom-trigger" aria-hidden="true"></div>
 
-<section id="boot-layer" aria-label="Windows 11 startup">
+<section id="boot-layer" aria-label="MythOS startup">
   <div id="win-boot">
-    <svg class="win-logo" viewBox="0 0 88 88" aria-hidden="true"><g fill="#0078d4"><rect x="0" y="0" width="42" height="42"/><rect x="46" y="0" width="42" height="42"/><rect x="0" y="46" width="42" height="42"/><rect x="46" y="46" width="42" height="42"/></g></svg>
+    <img class="win-logo" src="Icons/mythos.png" alt="">
     <div class="win-spin"><i></i><i></i><i></i><i></i><i></i></div>
   </div>
 </section>
@@ -46,6 +46,7 @@
   
  <article id="lock-ui">
     <div class="lock-content">
+      <img class="l-logo" src="Icons/mythos.png" alt="">
       <div class="l-day" id="lock-day-large">FRIDAY</div>
       <div class="l-date" id="lock-date">03 APRIL, 2026.</div>
       <div class="l-time" id="lock-time">08:43</div>
@@ -113,7 +114,7 @@
 <!-- Desktop icons -->
 <div id="desk-icons">
   <div class="d-ico" data-app="explorer" data-place="thispc" tabindex="0"><img src="Icons/pc.svg" alt=""><span>This PC</span></div>
-  <div class="d-ico" id="d-bin" data-app="explorer" data-place="bin" tabindex="0"><img src="Icons/bin.svg" alt=""><span>Recycle Bin</span></div>
+  <div class="d-ico" id="d-bin" data-app="explorer" data-place="bin" tabindex="0"><img src="Icons/bin.png" alt=""><span>Recycle Bin</span></div>
 </div>
 <!-- Widgets -->
 <div id="wid-btn" title="Widgets"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="8" height="8" rx="2" fill="#4cc2ff"/><rect x="13" y="3" width="8" height="8" rx="2" fill="#a78bfa"/><rect x="3" y="13" width="8" height="8" rx="2" fill="#34d399"/><rect x="13" y="13" width="8" height="8" rx="2" fill="#fbbf24"/></svg><div><b id="wb-day">Sunday</b><small id="wb-date">Nov 8</small></div></div>
@@ -125,7 +126,7 @@
   <div class="wd-card"><div class="wd-h">Quick notes</div><textarea id="wd-note" placeholder="Jot something down. It saves automatically."></textarea></div>
   <div class="wd-card"><div class="wd-h">This device</div><div class="wd-stats"><div><b id="wd-cpu">-</b><small>Cores</small></div><div><b id="wd-mem">-</b><small>Memory</small></div><div><b id="wd-bat">-</b><small>Battery</small></div></div></div>
 </div>
-<!-- Windows 11 system tray & flyouts -->
+<!-- MythOS system tray & flyouts -->
 <div id="tray">
   <div class="tray-btn" id="tray-qs" title="Quick settings">
     <svg viewBox="0 0 24 24"><path d="M2 9a15 15 0 0 1 20 0M5 12.5a10 10 0 0 1 14 0M8.5 16a5 5 0 0 1 7 0"/><circle cx="12" cy="19.5" r="1"/></svg>
@@ -201,7 +202,7 @@
 <div id="toast-container" aria-live="polite"></div>
 
 <!-- OOBE (out-of-box experience) -->
-<div id="oobe" aria-live="polite"><div id="ocard" class="ocard"></div><div class="ostat" id="ostat"></div></div>
+<div id="oobe" aria-live="polite"><img class="omark" src="Icons/mythos.png" alt="MythOS"><div id="obg" aria-hidden="true"><video muted loop playsinline></video><img alt=""></div><div id="ocard" class="ocard"></div><div class="ostat" id="ostat"></div></div>
 
 <script src="inline-apps.js"></script>
 <script src="script.js"></script>

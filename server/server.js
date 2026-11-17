@@ -1,9 +1,9 @@
 'use strict';
-/* Windows 11 server. No dependencies, Node 18+.
+/* MythOS server. No dependencies, Node 18+.
    - Accounts: Microsoft (Azure / Entra ID) only. The OS signs in with Microsoft, then hands the server its Microsoft access token.
      The server checks that token with Microsoft Graph (/me) and gives back its own session token. No passwords are ever stored here.
    - Sessions: random tokens (only a SHA-256 of each token is stored)
-   - Also serves the Windows 11 files from the folder above, so everything is same-origin. */
+   - Also serves the MythOS files from the folder above, so everything is same-origin. */
 const http = require('http'), fs = require('fs'), path = require('path'), crypto = require('crypto');
 const PORT = +process.env.PORT || 8080;
 const HOST = process.env.HOST || '127.0.0.1';          // use HOST=0.0.0.0 only behind HTTPS
@@ -57,10 +57,10 @@ function authed(req) {
 function newSession(email) {
   const t = crypto.randomBytes(32).toString('hex'); sessions[sha(t)] = { email, exp: Date.now() + SESSION_MS }; save(SF, sessions); return t;
 }
-/* ---- Windows 11 Servers: chat servers people create and use together ---- */
+/* ---- MythOS Servers: chat servers people create and use together ---- */
 const XF = path.join(DATA, 'servers.json');
 let servers = load(XF, null);
-if (!servers) { servers = { s_lounge: { id: 's_lounge', name: 'Windows 11 Lounge', owner: '', ownerName: 'Windows 11', created: new Date().toISOString(), next: 2, messages: [{ id: 1, t: Date.now(), u: 'Windows 11', text: 'Welcome to the Windows 11 Lounge! Say hi, or create your own server on the left.' }] } }; }
+if (!servers) { servers = { s_lounge: { id: 's_lounge', name: 'MythOS Lounge', owner: '', ownerName: 'MythOS', created: new Date().toISOString(), next: 2, messages: [{ id: 1, t: Date.now(), u: 'MythOS', text: 'Welcome to the MythOS Lounge! Say hi, or create your own server on the left.' }] } }; }
 let xDirty = false; function saveServers() { xDirty = true; }
 setInterval(() => { if (xDirty) { xDirty = false; try { save(XF, servers); } catch (e) {} } }, 1500).unref();
 process.on('SIGINT', () => { try { save(XF, servers); } catch (e) {} process.exit(0); });
@@ -72,7 +72,7 @@ const ALLOWED_EMAILS = (process.env.ALLOWED_EMAILS || '').split(',').map(x => x.
 const ALLOWED_TENANT = (process.env.ALLOWED_TENANT || '').trim().toLowerCase();                                    // optional: only accounts from this Azure tenant ID
 
 
-/* ---- usage info: your own Windows 11 sessions send what you use so future updates can be built from it ---- */
+/* ---- usage info: your own MythOS sessions send what you use so future updates can be built from it ---- */
 const TF = path.join(DATA, 'usage.jsonl'), ADMIN_KEY = process.env.ADMIN_KEY || '';
 const tHits = new Map(), COLLECT = process.env.COLLECT_USAGE !== '0';   // COLLECT_USAGE=0 makes this server store nothing
 function tOk(ip) { const n = Date.now(), a = (tHits.get(ip) || []).filter(x => n - x < 60000); a.push(n); tHits.set(ip, a); return a.length <= 60; }
@@ -108,7 +108,7 @@ async function api(req, res, p) {
   reqCount++;
   if (p === '/api/telemetry' || p.startsWith('/api/insights')) { const r = await telemetry(req, res, p); if (r !== false) return; }
   if (p === '/api/health') return send(res, 200, { ok: true, service: 'windope' });
-  if (p === '/api/status') { const a = authed(req), o = { ok: true, name: 'windows11', startedAt: STARTED, uptimeSec: Math.round((Date.now() - STARTED) / 1000), node: process.version };
+  if (p === '/api/status') { const a = authed(req), o = { ok: true, name: 'mythos', startedAt: STARTED, uptimeSec: Math.round((Date.now() - STARTED) / 1000), node: process.version };
     if (a) { o.accounts = Object.keys(users).length; o.sessions = Object.keys(sessions).length; o.servers = Object.keys(servers).length; o.requests = reqCount; } return send(res, 200, o); }
   try {
     if (req.method === 'POST' && p === '/api/ms-login') {
@@ -124,8 +124,8 @@ async function api(req, res, p) {
       } catch (e) { return send(res, 502, { error: 'Couldn’t reach Microsoft to check your sign-in.' }); }
       const email = clean(me.mail || me.userPrincipalName, 254).toLowerCase(), name = clean(me.displayName || email.split('@')[0], 24) || 'User';
       if (!EMAIL.test(email)) return send(res, 400, { error: 'Your Microsoft account has no email address.' });
-      if (ALLOWED_EMAILS.length && ALLOWED_EMAILS.indexOf(email) < 0) return send(res, 403, { error: 'This Windows 11 server isn’t open to that account.' });
-      if (ALLOWED_TENANT) { try { const tid = String(JSON.parse(Buffer.from(tk.split('.')[1], 'base64url').toString()).tid || '').toLowerCase(); if (tid !== ALLOWED_TENANT) return send(res, 403, { error: 'This Windows 11 server only accepts accounts from one organization.' }); } catch (e) { return send(res, 403, { error: 'Couldn’t check your organization.' }); } }
+      if (ALLOWED_EMAILS.length && ALLOWED_EMAILS.indexOf(email) < 0) return send(res, 403, { error: 'This MythOS server isn’t open to that account.' });
+      if (ALLOWED_TENANT) { try { const tid = String(JSON.parse(Buffer.from(tk.split('.')[1], 'base64url').toString()).tid || '').toLowerCase(); if (tid !== ALLOWED_TENANT) return send(res, 403, { error: 'This MythOS server only accepts accounts from one organization.' }); } catch (e) { return send(res, 403, { error: 'Couldn’t check your organization.' }); } }
       const old = users[email]; users[email] = { email, name, created: old ? old.created : new Date().toISOString() }; save(UF, users);
       return send(res, 200, { token: newSession(email), user: pub(users[email]) });
     }
@@ -142,9 +142,9 @@ async function api(req, res, p) {
           if (name.length < 2) return send(res, 400, { error: 'Give your server a name (2 to 24 characters).' });
           if (Object.values(servers).some(s => s.name.toLowerCase() === name.toLowerCase())) return send(res, 409, { error: 'A server with that name already exists.' });
           if (Object.values(servers).filter(s => s.owner === me.email).length >= 5) return send(res, 400, { error: 'You can own up to 5 servers.' });
-          if (Object.keys(servers).length >= 500) return send(res, 400, { error: 'This Windows 11 has reached its server limit.' });
+          if (Object.keys(servers).length >= 500) return send(res, 400, { error: 'This MythOS has reached its server limit.' });
           const id = 's_' + crypto.randomBytes(5).toString('hex');
-          servers[id] = { id, name, owner: me.email, ownerName: me.name, created: new Date().toISOString(), next: 2, messages: [{ id: 1, t: Date.now(), u: 'Windows 11', text: me.name + ' created ' + name + '.' }] };
+          servers[id] = { id, name, owner: me.email, ownerName: me.name, created: new Date().toISOString(), next: 2, messages: [{ id: 1, t: Date.now(), u: 'MythOS', text: me.name + ' created ' + name + '.' }] };
           saveServers(); return send(res, 201, { server: sinfo(servers[id], me) });
         }
       } else {
@@ -195,8 +195,8 @@ http.createServer((req, res) => {
   if (!f.startsWith(ROOT + path.sep)) { res.writeHead(403); return res.end(); }
   serveFile(req, res, f);
 }).listen(PORT, HOST, () => {
-  console.log('Windows 11 server running at http://' + (HOST === '0.0.0.0' ? 'localhost' : HOST) + ':' + PORT + '/');
-  console.log('Windows 11:        http://localhost:' + PORT + '/');
+  console.log('MythOS server running at http://' + (HOST === '0.0.0.0' ? 'localhost' : HOST) + ':' + PORT + '/');
+  console.log('MythOS:        http://localhost:' + PORT + '/');
   console.log('Accounts: Microsoft (Azure / Entra ID) sign-in. Set up your app registration first, see README.md.');
   if (HOST !== '127.0.0.1' && HOST !== 'localhost') console.log('NOTE: put this behind HTTPS before real people use it. Microsoft sign-in also needs https (or http://localhost).');
 });

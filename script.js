@@ -1,5 +1,5 @@
 (function(){try{var q=new URLSearchParams(location.search);if(window.opener&&window.opener!==window&&q.get('state')&&(q.get('code')||q.get('error'))){window.opener.postMessage({msauth:1,code:q.get('code'),state:q.get('state'),error:q.get('error_description')||q.get('error')},location.origin);window.close()}}catch(e){}})();
-var _SYSTEM_PATHS = ["C:/Windows/System32/kernel32.dll", "/var/www/html/windows11/", "https://windows11.local/api/v1/auth"];
+var _SYSTEM_PATHS = ["C:/Windows/System32/kernel32.dll", "/var/www/html/mythos/", "https://mythos.local/api/v1/auth"];
 var _devBuildVer = "3.0.1";
 
 var APPS = {
@@ -7,6 +7,7 @@ var APPS = {
     'settings': {title: 'Settings', path: 'script/Apps/Settings/index.html', icon: 'Icons/settings.svg', pinned: true},
     'music': {title: 'Music', path: 'script/Apps/Music/index.html', icon: 'Icons/music.svg', pinned: true},
     'browser': {title: 'Drift', path: 'script/Apps/Browser/index.html', icon: 'Icons/chrome.png', pinned: true},
+    'xbox': {title: 'Xbox', path: 'script/Apps/Xbox/index.html', icon: 'Icons/xbox.png', pinned: true},
     'store': {title: 'Store', path: 'script/Apps/Store/index.html', icon: 'Icons/store.svg', pinned: true},
     'messages': {title: 'Messages', path: 'script/Apps/Messages/index.html', icon: 'Icons/messages.svg', pinned: true},
     'youtube': {title: 'YouTube', path: 'script/Apps/YouTube/index.html', icon: 'Icons/youtube.svg', pinned: true},
@@ -28,21 +29,50 @@ function syncPins() {
 }
 
 var wallpaperRegistry = {
-    "Bloom": {id: "Bloom", name: "Bloom", url: "bloom", locked: false},
-    "Default": {id: "Default", name: "Snake Skeleton", url: "Videos/default.mp4", locked: false},
-    "green": {id: "green", name: "Green Anime", url: "Videos/green.mp4", locked: false},
-    "33A56": {id: "hunt_trait", name: "Hunt Showdown", url: "Videos/33A56.mp4", locked: false},
-    "99Med": {id: "99Med", name: "92 Med", url: "Videos/92Med.mp4", locked: false},
-    "Crown": {id: "Crown", name: "Crowned", url: "Videos/Crown.png", locked: false},
-    "F-1": {id: "F-1", name: "F-1 Formula", url: "Videos/F-1.mp4", locked: false},
-    "Minecraft01": {id: "Minecraft01", name: "Minecraft 01", url: "Videos/Minecraft01.mp4", locked: false},
-    "Minecraft03": {id: "Minecraft03", name: "Minecraft 03", url: "Videos/Minecraft03.mp4", locked: false},
-    "Skello": {id: "Skello", name: "Skello", url: "Videos/Skello.MP4", locked: false},
-    "sukuna-fire": {id: "sukuna-fire", name: "Sukuna Fire", url: "Videos/sukuna-fire.mp4", locked: false},
-    "CozyFox": {id: "CozyFox", name: "Cozy Fox", url: "Videos/CozyFox.mp4", locked: false},
-    "RainyCity": {id: "RainyCity", name: "Rainy City", url: "Videos/RainyCity.mp4", locked: false},
-    "Gojo": {id: "Gojo", name: "Gojo", url: "Videos/Gojo.mp4", locked: false},
-    "BlackHole": {id: "BlackHole", name: "Black Hole", url: "Videos/BlackHole.mp4", locked: false},
+    "Bloom": {id: "Bloom", name: "Bloom", url: "bloom", locked: false, cat: "Nature"},
+    "Default": {id: "Default", name: "Snake Skeleton", url: "Videos/default.mp4", locked: false, cat: "Dark"},
+    "green": {id: "green", name: "Green Anime", url: "Videos/green.mp4", locked: false, cat: "Anime"},
+    "33A56": {id: "hunt_trait", name: "Hunt Showdown", url: "Videos/33A56.mp4", locked: false, cat: "Games"},
+    "99Med": {id: "99Med", name: "92 Med", url: "Videos/92Med.mp4", locked: false, cat: "Dark"},
+    "Crown": {id: "Crown", name: "Crowned", url: "Videos/Crown.png", locked: false, cat: "Dark"},
+    "F-1": {id: "F-1", name: "F-1 Formula", url: "Videos/F-1.mp4", locked: false, cat: "Games"},
+    "Minecraft01": {id: "Minecraft01", name: "Minecraft 01", url: "Videos/Minecraft01.mp4", locked: false, cat: "Minecraft"},
+    "Minecraft03": {id: "Minecraft03", name: "Minecraft 03", url: "Videos/Minecraft03.mp4", locked: false, cat: "Minecraft"},
+    "Skello": {id: "Skello", name: "Skello", url: "Videos/Skello.MP4", locked: false, cat: "Dark"},
+    "sukuna-fire": {id: "sukuna-fire", name: "Sukuna Fire", url: "Videos/sukuna-fire.mp4", locked: false, cat: "Anime"},
+    "CozyFox": {id: "CozyFox", name: "Cozy Fox", url: "Videos/CozyFox.mp4", locked: false, cat: "Nature"},
+    "RainyCity": {id: "RainyCity", name: "Rainy City", url: "Videos/RainyCity.mp4", locked: false, cat: "Nature"},
+    "Gojo": {id: "Gojo", name: "Gojo", url: "Videos/Gojo.mp4", locked: false, cat: "Anime"},
+    "SunbeamGrove": {id: "SunbeamGrove", name: "Sunbeam Grove", url: "Videos/SunbeamGrove.mp4", locked: false, cat: "Minecraft", loop: true},
+    "RainyMushrooms": {id: "RainyMushrooms", name: "Rainy Mushrooms", url: "Videos/RainyMushrooms.mp4", locked: false, cat: "Minecraft", loop: true},
+    "GoldenFields": {id: "GoldenFields", name: "Golden Fields", url: "Videos/GoldenFields.mp4", locked: false, cat: "Minecraft", loop: true},
+    "TorchCave": {id: "TorchCave", name: "Torchlit Cave", url: "Videos/TorchCave.mp4", locked: false, cat: "Minecraft", loop: true},
+    "CherrySunrise": {id: "CherrySunrise", name: "Cherry Sunrise", url: "Videos/CherrySunrise.mp4", locked: false, cat: "Minecraft", loop: true},
+    "RainyGraveyard": {id: "RainyGraveyard", name: "Rainy Graveyard", url: "Videos/RainyGraveyard.mp4", locked: false, cat: "Minecraft", loop: true},
+    "NeonCollage": {id: "NeonCollage", name: "Neon Collage", url: "Videos/NeonCollage.mp4", locked: false, cat: "Anime", loop: true},
+    "BreadRun": {id: "BreadRun", name: "Bread Run", url: "Videos/BreadRun.mp4", locked: false, cat: "Anime", loop: true},
+    "BlushingPink": {id: "BlushingPink", name: "Blushing Pink", url: "Videos/BlushingPink.mp4", locked: false, cat: "Anime", loop: true},
+    "WonderlandCards": {id: "WonderlandCards", name: "Wonderland Cards", url: "Videos/WonderlandCards.mp4", locked: false, cat: "Dark", loop: true},
+    "PetalLake": {id: "PetalLake", name: "Petal Lake", url: "Videos/PetalLake.mp4", locked: false, cat: "Nature", loop: true},
+    "SakuraSky": {id: "SakuraSky", name: "Sakura Sky", url: "Videos/SakuraSky.mp4", locked: false, cat: "Nature", loop: true},
+    "CrimsonStare": {id: "CrimsonStare", name: "Crimson Stare", url: "Videos/CrimsonStare.jpg", locked: false, cat: "Anime", loop: false},
+    "MirrorEyes": {id: "MirrorEyes", name: "Mirror Eyes", url: "Videos/MirrorEyes.mp4", locked: false, cat: "Anime", loop: true},
+    "CyanPlaylist": {id: "CyanPlaylist", name: "Cyan Playlist", url: "Videos/CyanPlaylist.mp4", locked: false, cat: "Anime", loop: true},
+    "PaleSketch": {id: "PaleSketch", name: "Pale Sketch", url: "Videos/PaleSketch.mp4", locked: false, cat: "Anime", loop: true},
+    "MonoLotus": {id: "MonoLotus", name: "Monochrome Lotus", url: "Videos/MonoLotus.mp4", locked: false, cat: "Nature", loop: true},
+    "SeasideGaze": {id: "SeasideGaze", name: "Seaside Gaze", url: "Videos/SeasideGaze.mp4", locked: false, cat: "Anime", loop: true},
+    "RiversideDusk": {id: "RiversideDusk", name: "Riverside Dusk", url: "Videos/RiversideDusk.mp4", locked: false, cat: "Anime", loop: true},
+    "ShadowTree": {id: "ShadowTree", name: "Shadow Tree", url: "Videos/ShadowTree.mp4", locked: false, cat: "Dark", loop: true},
+    "JuiceSketch": {id: "JuiceSketch", name: "Juice Sketch", url: "Videos/JuiceSketch.mp4", locked: false, cat: "Dark", loop: true},
+    "BlueHollow": {id: "BlueHollow", name: "Blue Hollow", url: "Videos/BlueHollow.mp4", locked: false, cat: "Dark", loop: true},
+    "UpsideDown": {id: "UpsideDown", name: "Upside Down", url: "Videos/UpsideDown.mp4", locked: false, cat: "Dark", loop: true},
+    "InkNoise": {id: "InkNoise", name: "Ink Noise", url: "Videos/InkNoise.mp4", locked: false, cat: "Dark", loop: true},
+    "DarkDuel": {id: "DarkDuel", name: "Dark Duel", url: "Videos/DarkDuel.mp4", locked: false, cat: "Games", loop: true},
+    "MoonlitRoses": {id: "MoonlitRoses", name: "Moonlit Roses", url: "Videos/MoonlitRoses.mp4", locked: false, cat: "Nature", loop: true},
+    "SnowyStreetlamp": {id: "SnowyStreetlamp", name: "Snowy Streetlamp", url: "Videos/SnowyStreetlamp.mp4", locked: false, cat: "Nature", loop: true},
+    "MonoSakura": {id: "MonoSakura", name: "Monochrome Sakura", url: "Videos/MonoSakura.mp4", locked: false, cat: "Nature", loop: true},
+    "NightMetro": {id: "NightMetro", name: "Night Metro", url: "Videos/NightMetro.mp4", locked: false, cat: "Dark", loop: true},
+    "BlackHole": {id: "BlackHole", name: "Black Hole", url: "Videos/BlackHole.mp4", locked: false, cat: "Dark"},
 };
 
 var sysConfig = JSON.parse(localStorage.getItem('cine_sys_config')) || {};
@@ -78,7 +108,7 @@ function applyFps(){ var f=document.getElementById('fps-counter'); if(f) f.style
 document.addEventListener('DOMContentLoaded', applyFps);
 
 var cloaks = {
-    none: {title: "Windows 11", icon: ""},
+    none: {title: "MythOS", icon: ""},
     google: {title: "Google", icon: "https://www.google.com/favicon.ico"},
     drive: {title: "My Drive - Google Drive", icon: "https://ssl.gstatic.com/images/branding/product/1x/drive_2020q4_32dp.png"},
     canvas: {title: "Dashboard", icon: "https://du11hjcvx0uqb.cloudfront.net/br/dist/images/favicon-e10d657a73.ico"},
@@ -91,7 +121,7 @@ window.updateCloak = function(key) {
     applyCloak();
 };
 
-var WIN_FAVICON = 'data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2032%2032%22%3E%3Cg%20fill%3D%22%230a84ff%22%3E%3Crect%20x%3D%223%22%20y%3D%223%22%20width%3D%2212.500%22%20height%3D%2212.500%22%20rx%3D%221.200%22/%3E%3Crect%20x%3D%2216.500%22%20y%3D%223%22%20width%3D%2212.500%22%20height%3D%2212.500%22%20rx%3D%221.200%22/%3E%3Crect%20x%3D%223%22%20y%3D%2216.500%22%20width%3D%2212.500%22%20height%3D%2212.500%22%20rx%3D%221.200%22/%3E%3Crect%20x%3D%2216.500%22%20y%3D%2216.500%22%20width%3D%2212.500%22%20height%3D%2212.500%22%20rx%3D%221.200%22/%3E%3C/g%3E%3C/svg%3E';
+var WIN_FAVICON = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAGxElEQVR42u2aW4ic5RnHf8/OZLI7m5iT5rSJGsVDjBFDIli1nvCAikfwdCX2RrwRrxQvWkovhIZSSr2p0CK9aSkULAhKqSJ4ikKMrqfEqKgbc87GdDe7mZ3MzN8L/x+8LJvZQ2Z2l833wDAf3/d+77z/5/k/x13IJZdccskll1xyySWXOS2S4owHLqkgqZQ+L85h4B0R0YgISZoPrAXmA98D1WxdzEWLR4R8XQI2AucAh4DdEXE8XR9zjeoJ+CuAy4D/A7uAvRFRHf1ecab8sZlkIKZo9fOAXwJrgE+AHcAAcHLM35oJ67Rq/Sjg3cAmYB3QsOV7gQMRcfKUyp5mWpaA5cBqYBmwwEuHgCPAfuBQRIyMx5pUOZLOBy4HakA/sBDYbdo3VWJMUzBaCVxjam4AVgFdQAGom57HgX3ATmA78CGwJyJqTX5jife70Nbut3L3RsQPE3K3doKXtAi4C3gYuBLoNuC6aVpPFFADRsyGH52uPgE+Bfp8v+64dRawGLjICvivLb4COBIRRyZ61mIbwV8MPAXcC5QNrmqrzwc6/FGihIoVsx8YNEsuMbCqP7KyljvKvwF8CywBvo+IEyn7ppUBCfjNwG+B6wwKoNMKLxs4Bo6VAjDs9SPAD3aFbXaLIb9fMQOuAz4A9vjdff7tmEwWiTaA3whsBX7hQ3cCJVuzAXwOvA98ZaoXbc0rgKuBlQ6Ig2bFMSujF/gYWOTC5m3gMDASEf1TPXexxeBXAM8k4LsS8NuBvwDvOEVlcUDJ9wrgUeBJ39vpd4/aWJuBg8BrvleJiBOnc/ZolQK819PAsz58JzDP338Dfm+lAJwwzRt+r2hFNSJiQNJ64M92lVfMhqVmzwd+/8RkC6a2KCCx/ibgReACPyrZ318Anrcl+yNiqMleBVM8C4C3Aec5RrxhRjQiojLb6vCCpN9IOizpoKRjkuqSXpa0QtIaScVJtK2LsgJH0rOSLpJUltQ5q/r67DCS1kn6n6R+f4YkHZB0jaRVWQ8+3uElRbLnRkkPSjrXwEvtwNCqOmCjqdowXbuAf7oLIyKq46WnrH+3Eu5wmfyWM0XNz9YAnRHx9WTTXVsUYN/vANb7wOHAVQFed2Q/3qyxyQJoAvA+V3WvJpUikm4F7gB2SPpmxhmQWKDs1nNeUtQcMQiadWKZ1X++1F0ul192jVAEqlbMjS6sdgE9wEJni9NmQStcYKEjd5pZfnQB0xjdGI1h9XOAX3n9C06V4ZJ2XuJWq90TrHInOTBbYkBW6WUBTq7gqpkCRoFPrX4LcDvwSkS8lQEew6p11/oLfN2dKHvGGVBIDlJP6v1CerhRVl8MPO41f4yI/ZKKY7hLwcpcmey5+HRBtyMLNJJ2tmSKLgUOOkiSWP1aW/1dB8owK2pNzrfZ4Atm3EDCNmYDA7IWtWKalt3Y9ALdETEo6SzgIT//a0T02eq1JnuXPPS42f1Dl78PzTgDEj+dn/j9MeBs1+qXmu4VSVcD1wOfAW8CIw6MzaY9C6zQO50ddnrvbRExksSSmWOA/brTljnmkdQ+4GugR9Jjrut7nN6+c5BrjNNXlJxd6m6uaqZ9jzvBWVMJdniPpQbXa2Vc6VFVBfgX8G+nxnozqxl8p2NIP/AnYAvwhWcAHwHvtcr/p6yAJK+XPJYqukhZB1xrH/2d6d4PDGXlsKSyC5zaKCZlVpet/TzwBHDAk6JlzhjVVtG/FQxY42kvHn6eNEX/Y6sNeGjRcDAbjIhhSSXP8QtJ/VA3Y9YDvwbu9sSnz0re6lohWgV+ygowVRea6svs/73JwOJLB0KADkm3A48BnZJecwo8ZGsXvcd6B7z7XVl+ZwVsAP4B/KEdrXBMlvbO68tN9y2m7aCD38dZoHN8KACPAFcZ1GbP8KvuF4bcQ5xtJWDF7HVw7QH+DjwXEUOt6gAnrYAEfBG42AcrJ93fHmCX832M2v8S4AHX8Fh5ax3Uur2m4q5x2MBXe+a3FXgpIurtAD8hBSTgy7Zg5joFU/9b4GizkbT9/R5XgGsd8LI9srlh2deH3Qq/FBG7x2qmpk0BCfjFwA326z6/d9SfelLqNssYSOqy22zx7HCp9xo2i3YA2yNifzpBahf4pgoY9ReeDfbX3S5KjlsZtYioT7Bg6pjI2ukC3jQLJOBvsu9+bitl/jo81j8bjFM215PxeQDKWJPcx/fbDvyUCkjA3+Jg96HXdXisPeVBhIFpovenXQEJ+HMdlD7ywfoi4ihzUGIM38vS3F5H98PMdUlm8UskbZK0bKznZ4IiCmck8FMxIpdccskll1xyySWXXOau/ASZf82BAua1HwAAAABJRU5ErkJggg==';
 function applyCloak() {
     var k = sysConfig.cloak || 'none';
     var sel = cloaks[k];
@@ -106,7 +136,7 @@ function applyCloak() {
         n.href = sel.icon;
         document.getElementsByTagName('head')[0].appendChild(n);
     } else {
-        document.title = "Windows 11";
+        document.title = "MythOS";
         let n = document.createElement('link');
         n.rel = 'icon'; n.type = 'image/svg+xml';
         n.href = WIN_FAVICON;
@@ -166,7 +196,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
 function renderUI() {
     let dock = document.getElementById('dock-container');
-    let dHTML = '<div class="dock-item dock-start" title="Start" onclick="toggleStartMenu()"><img src="Icons/start.svg" alt="Start"></div><div class="dock-item" title="Search" onclick="toggleStartMenu();setTimeout(function(){var i=document.getElementById(\'start-search-input\');if(i)i.focus()},120)"><img src="Icons/search.svg" alt="Search"></div><div class="dock-item" title="All apps" onclick="toggleAppDrawer()"><img src="Icons/apps.svg" alt="All apps"></div><div class="dock-sep"></div>';
+    let dHTML = '<div class="dock-item dock-start" title="Start" onclick="toggleStartMenu()"><img src="Icons/mythos.png" alt="Start"></div><div class="dock-item" title="Search" onclick="toggleStartMenu();setTimeout(function(){var i=document.getElementById(\'start-search-input\');if(i)i.focus()},120)"><img src="Icons/search.svg" alt="Search"></div><div class="dock-item" title="All apps" onclick="toggleAppDrawer()"><img src="Icons/apps.svg" alt="All apps"></div><div class="dock-sep"></div>';
     
     let pGrid = document.getElementById('pinned-grid');
     let pHTML = '';
@@ -250,7 +280,7 @@ document.addEventListener('keydown', function(e) {
 });
 
 function startBootSequence() {
-    // Windows 11 style: loads on its own, no key presses needed
+    // MythOS style: loads on its own, no key presses needed
     setTimeout(function() { if(bootActive) skipBootSequence(); }, 2600);
 }
 
@@ -304,7 +334,7 @@ window.unlockSystem = function() {
             if(bV.style.display !== 'none') bV.play().catch(function(e){});
         }
         if(!welcomeShown) {
-            showNotification("Welcome to Windows 11", "Open Settings to personalize your PC.");
+            showNotification("Welcome to MythOS", "Open Settings to personalize your PC.");
             welcomeShown = true;
         }
     }, 600);
@@ -352,8 +382,9 @@ function initWallpapers() {
 function updateWallpaperLoop() {
     let bV = document.getElementById('bg-video');
     let lV = document.getElementById('lock-video');
-    if(bV) bV.loop = sysConfig.wpLoop;
-    if(lV) lV.loop = sysConfig.wpLoop;
+    var _h=wallpaperRegistry[sysConfig.homeWallpaper],_l=wallpaperRegistry[sysConfig.lockWallpaper];
+    if(bV) bV.loop = !!(sysConfig.wpLoop || (_h && _h.loop));
+    if(lV) lV.loop = !!(sysConfig.wpLoop || (_l && _l.loop));
     if(!sysConfig.optBg && isDesktopActive && bV && bV.paused && bV.style.display !== 'none') {
         bV.play().catch(function(e){});
     }
@@ -551,7 +582,7 @@ function openWindow(id) {
                     <div class="setting-card">
                         <div class="setting-text"><b>Tab Cloaking</b><small>Disguises OS as another site</small></div>
                         <select id="cloak-select" onchange="window.parent.updateCloak(this.value)">
-                            <option value="none">None (Windows 11)</option>
+                            <option value="none">None (MythOS)</option>
                             <option value="google">Google</option>
                             <option value="drive">Google Drive</option>
                             <option value="canvas">Canvas</option>
@@ -1284,6 +1315,7 @@ var P={
  edit:'<svg viewBox="0 0 24 24"><path d="M4 20h4L19 9l-4-4L4 16zM13 7l4 4"/></svg>',
  eye:'<svg viewBox="0 0 24 24"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>',
  trash:'<svg viewBox="0 0 24 24"><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13"/></svg>',
+ restore:'<svg viewBox="0 0 24 24"><path d="M4 12a8 8 0 1 0 2.6-5.9M4 4v5h5"/></svg>',
  pal:'<svg viewBox="0 0 24 24"><path d="M12 3a9 9 0 1 0 0 18c1.6 0 2-1 1.4-2-.7-1.2 0-2.5 1.5-2.5H17a4 4 0 0 0 4-4C21 6.5 17 3 12 3z"/></svg>'
 };
 var ctx=document.createElement('div');ctx.id='os-ctx';ctx.setAttribute('popover','manual');document.body.appendChild(ctx);
@@ -1333,11 +1365,11 @@ function appInfoDialog(id){var a=APPS[id];if(!a)return;
   var run=!!get(id);
   function draw(extra){
     var pin=!!a.pinned,desk=desktopLayout.some(function(d){return d.id===id});
-    o.innerHTML='<div style="width:min(520px,94vw);max-height:92vh;overflow:auto;background:'+bg+';color:'+fg+';border:1px solid '+bd+';border-radius:8px;box-shadow:0 32px 80px rgba(0,0,0,.5)"><div style="display:flex;align-items:center;gap:16px;padding:20px 20px 14px">'+icon+'<div style="flex:1;min-width:0"><div style="font-size:20px;font-weight:600">'+E(a.title)+'</div><div style="color:'+sub+';font-size:13px">Version 1.0 &nbsp;|&nbsp; '+(a.user?'Unknown publisher':'Windows 11')+'</div></div><button id="aix" style="width:32px;height:32px;border:0;background:none;color:'+fg+';font-size:15px;cursor:pointer;border-radius:4px">✕</button></div><div style="padding:0 20px 8px"><div style="font-size:13px;font-weight:600;margin:6px 0 8px">App information</div>'
+    o.innerHTML='<div style="width:min(520px,94vw);max-height:92vh;overflow:auto;background:'+bg+';color:'+fg+';border:1px solid '+bd+';border-radius:8px;box-shadow:0 32px 80px rgba(0,0,0,.5)"><div style="display:flex;align-items:center;gap:16px;padding:20px 20px 14px">'+icon+'<div style="flex:1;min-width:0"><div style="font-size:20px;font-weight:600">'+E(a.title)+'</div><div style="color:'+sub+';font-size:13px">Version 1.0 &nbsp;|&nbsp; '+(a.user?'Unknown publisher':'MythOS')+'</div></div><button id="aix" style="width:32px;height:32px;border:0;background:none;color:'+fg+';font-size:15px;cursor:pointer;border-radius:4px">✕</button></div><div style="padding:0 20px 8px"><div style="font-size:13px;font-weight:600;margin:6px 0 8px">App information</div>'
      +row('Status',run?'Running':'Not running')
      +row('Type',a.user?'Installed app (web app)':'System app')
-     +row('Source',a.user?(rec.file?'From file “'+E(rec.file)+'”':'Installed by you'):'Built into Windows 11')
-     +row('Installed',a.user?D(rec.added):'With Windows 11')
+     +row('Source',a.user?(rec.file?'From file “'+E(rec.file)+'”':'Installed by you'):'Built into MythOS')
+     +row('Installed',a.user?D(rec.added):'With MythOS')
      +row('Last opened',use.last?D(use.last):'Not opened yet')
      +row('Times opened',String(use.n||0))
      +row('App size','<span id="aisz">Calculating…</span>')
@@ -1345,7 +1377,7 @@ function appInfoDialog(id){var a=APPS[id];if(!a)return;
      +(a.user?row('Main file',E(rec.entry||'index.html')):'')
      +row('Graphics quality',q?q.charAt(0).toUpperCase()+q.slice(1)+' <a id="aiq" style="color:var(--accent,#4cc2ff);cursor:pointer;margin-left:8px">Reset</a>':'Ask each time')
      +row('Pinned to taskbar',pin?'Yes':'No')+row('On desktop',desk?'Yes':'No')
-     +row('Stored in','Windows 11 app storage in this browser')
+     +row('Stored in','MythOS app storage in this browser')
      +'</div><div style="display:flex;flex-wrap:wrap;gap:8px;justify-content:flex-end;padding:14px 20px 18px;border-top:1px solid '+bd+';margin-top:8px">'+btn('aio',run?'Switch to app':'Open',1)+btn('aip',pin?'Unpin from taskbar':'Pin to taskbar')+btn('aid',desk?'On desktop':'Add to desktop')+(a.user&&window.AppHost?btn('aiu','Uninstall'):'')+'</div></div>';
     var $=function(i){return o.querySelector('#'+i)};
     $('aix').onclick=function(){o.remove()};o.onclick=function(e){if(e.target===o)o.remove()};
@@ -1412,11 +1444,11 @@ function desktopMenu(x,y){
     item('gear','Settings',function(){openWindow('settings')}),
     item('full',isFullscreen()?'Exit full screen':'Enter full screen',toggleFullscreen,'F11'),
     sep(),
-    item('info','About Windows 11',function(){openUpdateLog()})
+    item('info','About MythOS',function(){openUpdateLog()})
   ]);
 }
 function iconMenu(x,y,el){var pl=el.dataset.place,bin=pl==='bin',its=[item('app','Open',function(){ExplorerHost.open(pl)})];
-  if(bin)its.push(item('trash','Empty Recycle Bin',function(){ExplorerHost.open('bin');setTimeout(function(){try{document.getElementById('frame-explorer').contentWindow.emptyBin()}catch(e){}},700)},null,' red'));
+  if(bin)its.push(item('restore','Restore all items',function(){BinHost.restoreAll()}),item('trash','Empty Recycle Bin',function(){BinHost.empty()},null,' red'));
   its.push(sep(),item('info','Properties',function(){try{showNotification(bin?'Recycle Bin':'This PC',bin?'Deleted files stay here until you empty it.':'Local Disk (C:) \u00b7 Web Edition')}catch(e){}}));
   show(x,y,its)}
 function windowMenu(x,y,id){
@@ -1466,7 +1498,7 @@ document.addEventListener('error',function(e){
 },true);
 
 
-/* =====================  WINDOWS 11 SHELL: tray, quick settings, calendar, start search  ===================== */
+/* =====================  MYTHOS SHELL: tray, quick settings, calendar, start search  ===================== */
 (function(){
 var $=function(i){return document.getElementById(i)};
 window.closeFlyouts=function(){['qs-panel','cal-panel'].forEach(function(i){var e=$(i);if(e)e.classList.remove('open')})};
@@ -1589,7 +1621,7 @@ window.applyUser=function(){var n=sysConfig.userName||'User';document.querySelec
 document.addEventListener('DOMContentLoaded',applyUser);applyUser();
 })();
 
-/* =====================  WINDOWS 11 OOBE  ===================== */
+/* =====================  MYTHOS OOBE  ===================== */
 (function(){
 var KEY='win_oobe';
 function done(){try{return !!localStorage.getItem(KEY)}catch(e){return false}}
@@ -1640,8 +1672,8 @@ PAGES.push({r:function(c,next){
   var LCI='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/></svg>';
   var mode=st.ms?'ms':(st.user&&st.user!=='Player 1'?'local':'ms');
   var local='<input class="oin" id="ous" placeholder="Account name" maxlength="24" autocomplete="off" spellcheck="false"><div class="oavu"><div class="oprev" id="oprev"></div><div class="oavb"><button class="oup" id="oupl">Upload picture</button><button class="oup" id="orem">Remove</button></div><input type="file" id="oaf" accept="image/*" hidden></div>';
-  var ms='<button class="oup oms" id="oms">'+MSI.replace('<svg ','<svg width="16" height="16" ')+'<span id="omst">Sign up with Microsoft</span></button><input class="oin" id="omcid" placeholder="Application (client) ID from Azure" spellcheck="false" autocomplete="off" style="display:none;margin-top:8px"><p class="ds" style="margin-top:10px">You’ll be taken to Microsoft to sign in or create an account. Your name, email and photo are used on this PC.</p>';
-  c.innerHTML=pg('who','How would you like to sign in?','Choose how you’ll use this PC. You can change this later in Settings &gt; Accounts.','<button class="opt" id="omM"><b>'+MSI+'Microsoft account</b>Recommended. Sign up or sign in with Microsoft to use your name, email and photo.</button><button class="opt" id="omL"><b>'+LCI+'Local account</b>Create an account that stays on this PC, with just a name and picture.</button><div id="opL">'+local+'</div><div id="opM">'+ms+'</div><div class="oerr" id="oerr"></div>','<button class="ac" id="oyes">Next</button>');
+  var ms='<button class="oup oms" id="oms">'+MSI.replace('<svg ','<svg width="16" height="16" ')+'<span id="omst">Sign up with Microsoft</span></button><input class="oin" id="omcid" placeholder="Application (client) ID from Azure" spellcheck="false" autocomplete="off" style="display:none;margin-top:8px"><p class="onote">You’ll be taken to Microsoft to sign in or create an account. Your name, email and photo carry over to this PC.</p>';
+  c.innerHTML=pg('who','How would you like to sign in?','Pick how you’ll use this PC. You can switch anytime in Settings.','<div class="oseg"><button id="omM">'+MSI.replace('<svg ','<svg width="16" height="16" ')+'Microsoft</button><button id="omL">'+LCI+'Local account</button></div><div id="opL">'+local+'</div><div id="opM">'+ms+'</div><div class="oerr" id="oerr"></div>','<button class="ac" id="oyes">Next</button>');
   var i=$('ous');i.value=(st.user&&st.user!=='Player 1')?st.user:'';
   function show(){$('omM').classList.toggle('on',mode==='ms');$('omL').classList.toggle('on',mode==='local');$('opL').style.display=mode==='local'?'':'none';$('opM').style.display=mode==='ms'?'':'none';$('oerr').textContent=''}
   $('omM').onclick=function(){mode='ms';show()};$('omL').onclick=function(){mode='local';show();i.focus()};
@@ -1676,8 +1708,8 @@ PAGES.push({r:function(c,next){
   $('oyes').onclick=next}});
 PAGES.push({r:function(c,next){
   var ks=Object.keys(wallpaperRegistry).filter(function(k){return !wallpaperRegistry[k].locked});
-  c.innerHTML=pg('pc','Pick a wallpaper','You can change it any time, or add your own later.','<div class="owps" id="owps">'+ks.map(function(k){var d=wallpaperRegistry[k],img=/\.(png|jpe?g)$/i.test(d.url),bl=d.url==='bloom',bg=bl?'Wallpapers/bloom-'+(st.theme==='light'?'light':'dark')+'.jpg':(img?d.url:'');return '<button data-w="'+k+'" class="'+(st.wp===k?'on':'')+'"><i style="'+(bg?'background-image:url('+bg+')':'')+'">'+(bg?'':'▶')+'</i>'+d.name+'</button>'}).join('')+'</div>','<button class="ac" id="oyes">Next</button>');
-  pick($('owps'),'w',function(v){st.wp=v;window.wpMode='both';setWallpaper(v,false,true)});$('oyes').onclick=next}});
+  c.innerHTML=pg('pc','Pick a wallpaper','You can change it any time, or add your own later.','<div class="owps" id="owps">'+ks.map(function(k){var d=wallpaperRegistry[k],img=/\.(png|jpe?g)$/i.test(d.url),bl=d.url==='bloom',bg=bl?'Wallpapers/bloom-'+(st.theme==='light'?'light':'dark')+'.jpg':(img?d.url:'');return '<button data-w="'+k+'" class="'+(st.wp===k?'on':'')+'"><i style="'+(bg?'background-image:url('+bg+')':'')+'">'+(bg?'':'<video muted preload="metadata" src="'+d.url+'#t=0.1"></video>')+'</i>'+d.name+'</button>'}).join('')+'</div>','<button class="ac" id="oyes">Next</button>');
+  pick($('owps'),'w',function(v){st.wp=v;window.wpMode='both';setWallpaper(v,false,true);obg(v)});$('oyes').onclick=next}});
 PAGES.push({r:function(c,next){
   function sw(id,label,on){return '<label class="otog"><span>'+label+'</span><input type="checkbox" id="'+id+'"'+(on?' checked':'')+'><i></i></label>'}
   c.innerHTML=pg('upd','Fine-tune the details','Windows, taskbar, clock and motion. Everything here lives in Settings too.','<div class="olab">Window corners</div><div class="ocor" id="ocor">'+CORNERS.map(function(x){return '<button data-k="'+x[1]+'" class="'+(st.corners===x[1]?'on':'')+'"><i class="c-'+x[1]+'"></i>'+x[0]+'</button>'}).join('')+'</div>'+sw('oglass','Blurred glass taskbar',st.glass)+sw('o24','24-hour clock',st.clock24)+sw('oanim','Smooth animations',st.anim),'<button class="ac" id="oyes">Finish</button>');
@@ -1700,6 +1732,10 @@ function confetti(n){
   for(var i=0;i<n;i++)P.push({x:Math.random()*cv.width,y:-20-Math.random()*cv.height*.5,vx:Math.random()*4-2,vy:2+Math.random()*4,s:5+Math.random()*7,r:Math.random()*6,vr:Math.random()*.3-.15,c:C[i%C.length]});
   var t0=Date.now();(function f(){x.clearRect(0,0,cv.width,cv.height);P.forEach(function(q){q.x+=q.vx;q.y+=q.vy;q.r+=q.vr;x.save();x.translate(q.x,q.y);x.rotate(q.r);x.fillStyle=q.c;x.fillRect(-q.s/2,-q.s/4,q.s,q.s/2);x.restore()});if(Date.now()-t0<4200)requestAnimationFrame(f);else cv.remove()})();
 }
+function obg(k){var d=wallpaperRegistry[k];if(!d)return;var b=$('obg'),v=b.querySelector('video'),im=b.querySelector('img'),u=d.url;b.style.opacity=0;setTimeout(function(){var bl=u==='bloom',isImg=bl||/\.(png|jpe?g|gif|webp)$/i.test(u)||(window.wpKinds&&window.wpKinds[u]==='img');
+    if(isImg){v.pause();v.style.display='none';im.style.display='block';im.src=bl?'Wallpapers/bloom-dark.jpg':u}
+    else{im.style.display='none';v.style.display='block';v.src=u;v.loop=true;v.load();v.play().catch(function(){})}
+    b.style.opacity=1},220)}
 function finishText(){
   var c=$('ocard');c.className='ocard fin';c.style.animation='none';
   c.innerHTML='<div class="finwrap"><div class="fintxt">Hi, '+(st.user||'Player 1')+'</div><div class="ospin big"></div><div class="fintxt" style="font-size:18px;opacity:.7">Setting things up for you</div></div>';
@@ -1713,7 +1749,10 @@ function finish(){
   setTimeout(function(){enter()},3000);
 }
 function enter(){
-  var o=$('oobe');o.classList.add('out');
+  var o=$('oobe');o.classList.add('unblur');
+  var _bv=document.getElementById('bg-video'),_ov=$('obg').querySelector('video');
+  try{if(_bv&&_bv.style.display!=='none'){if(_ov&&_ov.currentTime)_bv.currentTime=_ov.currentTime;_bv.play().catch(function(){})}}catch(e){}
+  setTimeout(function(){o.classList.add('out')},1500);
   setTimeout(function(){
     o.style.display='none';
     var bv=document.getElementById('bg-video');
@@ -1722,11 +1761,11 @@ function enter(){
     updateClock();
     try{showNotification('Welcome, '+st.user+'!','Open Settings any time to change your look.')}catch(e){}
     welcomeShown=true;
-  },800);
+  },2300);
 }
 window.startOOBE=function(){
   st.theme='light';updateSysSetting('theme','light');applyTheme();
-  var o=$('oobe');o.style.display='block';$('ostat').innerHTML=STAT;idx=0;show();
+  var o=$('oobe');o.style.display='block';$('ostat').innerHTML=STAT;idx=0;show();obg(sysConfig.homeWallpaper||'Bloom');
 };
 /* hook the boot sequence: first run -> OOBE, afterwards -> lock screen */
 var _skip=skipBootSequence;
@@ -2038,11 +2077,9 @@ function installFile(f,open){
 function askQuality(a){return new Promise(function(res){
   var K='app_q_'+a.rec.id,sv=null;try{sv=localStorage.getItem(K)}catch(e){}
   if(sv){res(sv);return}
-  var light=document.documentElement.classList.contains('light'),bg=light?'#f9f9f9':'#202020',fg=light?'#111':'#fff';
-  var o=document.createElement('div');o.style.cssText='position:fixed;inset:0;z-index:99999999;background:rgba(0,0,0,.5);display:grid;place-items:center;font:14px "Segoe UI Variable Text","Segoe UI",system-ui,sans-serif';
-  var bt='flex:1;padding:12px 8px;border-radius:8px;border:1px solid rgba(128,128,128,.4);background:rgba(128,128,128,.15);color:'+fg+';cursor:pointer;font:inherit';
-  var nm=String(a.title).replace(/[<>&]/g,'');
-  o.innerHTML='<div style="width:min(440px,92vw);background:'+bg+';color:'+fg+';border:1px solid rgba(128,128,128,.35);border-radius:12px;padding:22px;box-shadow:0 24px 80px rgba(0,0,0,.6)"><h2 style="font-size:18px;font-weight:600;margin:0 0 6px">Graphics quality</h2><p style="margin:0 0 14px;opacity:.75;font-size:13px">'+(a.rec.fnf?'<b>Friday Night Funkin’ detected.</b> ':'')+'Pick how “'+nm+'” loads. This decides which game files are loaded first.'+((window.OSControllers&&OSControllers().length)?'<br>🎮 Controller detected: '+OSControllers()[0].name.replace(/[<>&]/g,''):'')+'</p><div style="display:flex;gap:8px"><button data-q="high" style="'+bt+'"><b>High</b><br><small>Loads all files<br>Full sharpness</small></button><button data-q="medium" style="'+bt+'"><b>Medium</b><br><small>Normal files<br>75% · 45 FPS</small></button><button data-q="low" style="'+bt+'"><b>Low</b><br><small>Essentials first<br>50% · 30 FPS</small></button></div><label style="display:flex;gap:8px;align-items:center;margin-top:14px;font-size:13px;opacity:.8"><input type="checkbox" id="qrem"> Remember for this app</label><div style="text-align:right;margin-top:10px"><button id="qx" style="padding:6px 14px;border-radius:6px;border:0;background:transparent;color:'+fg+';opacity:.7;cursor:pointer;font:inherit">Cancel</button></div></div>';
+  var nm=String(a.title).replace(/[<>&]/g,''),o=document.createElement('div');o.className='mq-ov';
+  var ctl=(window.OSControllers&&OSControllers().length)?'<br>🎮 Controller detected: '+OSControllers()[0].name.replace(/[<>&]/g,''):'';
+  o.innerHTML='<div class="mq-dlg" role="dialog" aria-modal="true" aria-labelledby="mqh"><div class="mq-body"><h2 id="mqh">Graphics quality</h2><p>'+(a.rec.fnf?'<b>Friday Night Funkin’ detected.</b> ':'')+'Pick how “'+nm+'” loads. This decides which game files are loaded first.'+ctl+'</p><div class="mq-opts"><button class="mq-opt rec" data-q="high"><b>High</b><small>Loads all files<br>Full sharpness</small></button><button class="mq-opt" data-q="medium"><b>Medium</b><small>Normal files<br>75% · 45 FPS</small></button><button class="mq-opt" data-q="low"><b>Low</b><small>Essentials first<br>50% · 30 FPS</small></button></div><label class="mq-chk"><input type="checkbox" id="qrem">Remember for this app</label></div><div class="mq-foot"><button class="mq-btn" id="qx">Cancel</button></div></div>';
   document.body.appendChild(o);
   o.querySelector('#qx').onclick=function(){o.remove();res(null)};
   [].forEach.call(o.querySelectorAll('[data-q]'),function(b){b.onclick=function(){var q=b.dataset.q;if(o.querySelector('#qrem').checked){try{localStorage.setItem(K,q)}catch(e){}}o.remove();res(q)}})})}
@@ -2053,10 +2090,9 @@ function preloadApp(a,q){return new Promise(function(res){
     var keys=Object.keys(files),ES=/\.(html?|js|mjs|css|json|wasm|xml|txt|atlas|data)$/i,MD=/\.(png|jpe?g|gif|webp|svg|bmp|ico|woff2?|ttf|otf|fnt)$/i;
     var list=keys.filter(function(k){return q==='high'?true:q==='medium'?(ES.test(k)||MD.test(k)):ES.test(k)});
     list.sort(function(x,y){return(ES.test(x)?0:MD.test(x)?1:2)-(ES.test(y)?0:MD.test(y)?1:2)});
-    var light=document.documentElement.classList.contains('light'),bg=light?'#f3f3f3':'#141414',fg=light?'#111':'#fff';
-    var o=document.createElement('div');o.style.cssText='position:fixed;inset:0;z-index:99999998;background:'+bg+';color:'+fg+';display:grid;place-items:center;font:14px "Segoe UI Variable Text","Segoe UI",system-ui,sans-serif';
-    var ic=a.icon&&/^(data:|Icons\/|http)/.test(a.icon)?'<img src="'+a.icon+'" style="width:72px;height:72px;border-radius:16px;object-fit:cover">':'';
-    o.innerHTML='<div style="text-align:center;width:min(360px,86vw)">'+ic+'<div style="font-size:20px;font-weight:600;margin:14px 0 4px">'+String(a.title).replace(/[<>&]/g,'')+'</div><div id="plq" style="opacity:.65;font-size:12px;margin-bottom:16px;text-transform:uppercase;letter-spacing:.08em">'+q+' quality</div><div style="height:4px;border-radius:3px;background:rgba(128,128,128,.3);overflow:hidden"><i id="plb" style="display:block;height:100%;width:0;background:var(--accent,#4cc2ff);transition:width .12s"></i></div><div id="plt" style="opacity:.7;font-size:12px;margin-top:10px;min-height:16px">Preparing…</div></div>';
+    var o=document.createElement('div');o.className='mq-load';
+    var ttl=String(a.title).replace(/[<>&]/g,''),ic=a.icon&&/^(data:|Icons\/|http)/.test(a.icon)?'<img src="'+a.icon+'" alt="">':'<div class="mq-ph">'+(ttl.charAt(0)||'•').toUpperCase()+'</div>';
+    o.innerHTML='<div>'+ic+'<h3>'+ttl+'</h3><div class="mq-q" id="plq">'+q.charAt(0).toUpperCase()+q.slice(1)+' quality</div><div class="mq-bar"><i id="plb"></i></div><div class="mq-t" id="plt">Preparing…</div></div>';
     document.body.appendChild(o);
     var n=list.length,i=0,t0=Date.now();
     (function step(){var end=Date.now()+14;while(i<n&&Date.now()<end){var k=list[i++];try{vfs(id,k,'')}catch(e){}}
@@ -2095,7 +2131,25 @@ window.ExplorerHost={pending:null,
   var f=document.getElementById('frame-explorer');try{if(f&&f.contentWindow&&f.contentWindow.Explorer&&f.contentWindow.Explorer.ready)f.contentWindow.Explorer.consume()}catch(e){}},
  take:function(){var p=this.pending;this.pending=null;return p}};
 window.updateBinIcon=function(){var full=false;try{var r=JSON.parse(localStorage.getItem('win_fs_v1'));full=!!(r&&r.c&&r.c['Recycle Bin']&&Object.keys(r.c['Recycle Bin'].c||{}).length)}catch(e){}
- var im=document.querySelector('#d-bin img');if(im)im.src=full?'Icons/bin-full.svg':'Icons/bin.svg'};
+ var im=document.querySelector('#d-bin img');if(im)im.src=full?'Icons/bin-full.png':'Icons/bin.png'};
+window.BinHost={
+ count:function(){try{var r=JSON.parse(localStorage.getItem('win_fs_v1'));return r&&r.c&&r.c['Recycle Bin']?Object.keys(r.c['Recycle Bin'].c||{}).length:0}catch(e){return 0}},
+ frame:function(){try{var f=document.getElementById('frame-explorer'),w=f&&f.contentWindow;return w&&w.Explorer&&w.Explorer.ready&&w.root?w:null}catch(e){return null}},
+ /* open Files on the bin, wait until it is ready, then run fn inside it */
+ run:function(fn){var self=this;ExplorerHost.open('bin');var n=0,t=setInterval(function(){var w=self.frame();if(w||++n>40){clearInterval(t);if(w)try{fn(w)}catch(e){}}},150)},
+ empty:function(){if(!this.count()){try{showNotification('Recycle Bin','The Recycle Bin is already empty.')}catch(e){}return}this.run(function(w){w.emptyBin()})},
+ restoreAll:function(){if(!this.count()){try{showNotification('Recycle Bin','There is nothing to restore.')}catch(e){}return}this.run(function(w){w.restoreAll()})},
+ dragging:function(on){var b=document.getElementById('d-bin');if(b)b.classList.toggle('drop',!!on&&false)},
+ drop:function(txt){var m=/^mythos-bin:(.*)$/.exec(txt||'');if(!m)return;var d;try{d=JSON.parse(m[1])}catch(e){return}var w=this.frame(),n=0;
+  if(w){n=w.trashItems(d.p,d.n)}else{try{var r=JSON.parse(localStorage.getItem('win_fs_v1')),dir=r,ok=true;d.p.forEach(function(k){dir=dir&&dir.c&&dir.c[k]});if(dir&&dir.t==='d'&&!dir.dev&&d.p[0]!=='Recycle Bin'){var bin=r.c['Recycle Bin'];d.n.forEach(function(nm){var it=dir.c[nm];if(!it||it.k==='app')return;var b=nm,i=2;while(bin.c[b])b=nm.replace(/(\.[^.]*)?$/,' ('+(i++)+')$1');it.rb={p:d.p.slice(),n:nm,at:Date.now()};bin.c[b]=it;delete dir.c[nm];n++});localStorage.setItem('win_fs_v1',JSON.stringify(r))}}catch(e){}}
+  window.updateBinIcon();try{if(n)showNotification('Recycle Bin',n+' item'+(n==1?'':'s')+' moved to the Recycle Bin.')}catch(e){}}
+};
+(function(){var b=document.getElementById('d-bin');if(!b)return;
+ b.addEventListener('dragenter',function(e){e.preventDefault();b.classList.add('drop')});
+ b.addEventListener('dragover',function(e){e.preventDefault();try{e.dataTransfer.dropEffect='move'}catch(x){}b.classList.add('drop')});
+ b.addEventListener('dragleave',function(){b.classList.remove('drop')});
+ b.addEventListener('drop',function(e){e.preventDefault();b.classList.remove('drop');var t='';try{t=e.dataTransfer.getData('text/plain')}catch(x){}BinHost.drop(t)})})();
+window.updateBinIcon=(function(prev){return function(){prev();var n=window.BinHost.count(),b=document.getElementById('d-bin');if(b)b.title=n?'Recycle Bin · '+n+' item'+(n==1?'':'s'):'Recycle Bin · empty'}})(window.updateBinIcon);
 window.updateBinIcon();window.addEventListener('storage',window.updateBinIcon);
 
 /* =====================  BLANK-APP WATCHDOG  ===================== */
@@ -2204,7 +2258,7 @@ function place(){[].forEach.call(di.querySelectorAll('.d-ico'),function(el,i){va
 place();
 var drag=null;
 di.addEventListener('pointerdown',function(e){var el=e.target.closest('.d-ico');if(!el||e.button>0)return;var r=el.getBoundingClientRect();drag={el:el,sx:e.clientX,sy:e.clientY,ox:r.left,oy:r.top,moved:false,id:e.pointerId}});
-window.addEventListener('pointermove',function(e){if(!drag||e.pointerId!==drag.id)return;var dx=e.clientX-drag.sx,dy=e.clientY-drag.sy;if(!drag.moved&&Math.abs(dx)+Math.abs(dy)<6)return;if(!drag.moved){drag.moved=true;drag.el.classList.add('sel');drag.el.style.zIndex=5;drag.el.style.transition='none'}
+window.addEventListener('pointermove',function(e){if(!drag||e.pointerId!==drag.id)return;var dx=e.clientX-drag.sx,dy=e.clientY-drag.sy;if(!drag.moved&&Math.abs(dx)+Math.abs(dy)<6)return;if(!drag.moved){drag.moved=true;drag.el.style.zIndex=5;drag.el.style.transition='none'}
   var z=parseFloat(getComputedStyle(di).zoom)||1,x=Math.max(0,Math.min(innerWidth-70,drag.ox+dx))/z,y=Math.max(0,Math.min(innerHeight-130,drag.oy+dy))/z;drag.el.style.left=x+'px';drag.el.style.top=y+'px'});
 window.addEventListener('pointerup',function(e){if(!drag||e.pointerId!==drag.id)return;if(drag.moved){POS[dk(drag.el)]={x:parseFloat(drag.el.style.left),y:parseFloat(drag.el.style.top)};try{localStorage.setItem('cine_dico_pos',JSON.stringify(POS))}catch(x){}drag.el.style.zIndex='';drag.el.style.transition=''}drag=null});
 
@@ -2212,16 +2266,16 @@ window.addEventListener('pointerup',function(e){if(!drag||e.pointerId!==drag.id)
 function onAcc(){var a=sysConfig.accent||'#4cc2ff',m=/^#([0-9a-f]{6})$/i.exec(a),l=m?parseInt(m[1].slice(0,2),16)*.299+parseInt(m[1].slice(2,4),16)*.587+parseInt(m[1].slice(4),16)*.114:200;document.documentElement.style.setProperty('--onacc',l>150?'#000':'#fff')}
 var aa0=window.applyAccent;window.applyAccent=function(){aa0();onAcc()};onAcc();
 
-/* ---- Windows 11 quick settings: filled slider tracks ---- */
+/* ---- MythOS quick settings: filled slider tracks ---- */
 function fill(i){var v=(i.value-i.min)/(i.max-i.min)*100;i.style.setProperty('--v',v+'%')}
 ['qs-bright','qs-vol'].forEach(function(id){var i=document.getElementById(id);if(!i)return;fill(i);i.addEventListener('input',function(){fill(i)})});
-/* ---- Windows 11 calendar flyout: seconds, arrows, agenda ---- */
+/* ---- MythOS calendar flyout: seconds, arrows, agenda ---- */
 var cp=document.getElementById('cal-panel'),pv=document.getElementById('cal-prev'),nx=document.getElementById('cal-next');
 if(pv)pv.innerHTML='<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 15l6-6 6 6"/></svg>';
 if(nx)nx.innerHTML='<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>';
 if(cp){var ag=document.createElement('div');ag.className='cal-agenda';ag.innerHTML='<span>No events today</span>';cp.appendChild(ag)}
 setInterval(function(){var b=document.getElementById('cal-big');if(!b||!cp||!cp.classList.contains('open'))return;var tz=sysConfig.timeZone||undefined;try{b.textContent=new Date().toLocaleTimeString([],{timeZone:tz,hour:'numeric',minute:'2-digit',second:'2-digit',hour12:!sysConfig.clock24})}catch(e){}},500);
-/* ---- Windows 11 widgets: weather card (Open-Meteo, no key) ---- */
+/* ---- MythOS widgets: weather card (Open-Meteo, no key) ---- */
 var wp=document.getElementById('wid-panel'),hello=wp&&wp.querySelector('.wd-hello');
 if(wp&&hello){
   var card=document.createElement('div');card.className='wd-card';card.id='wd-weather';card.innerHTML='<div class="wd-h">Weather</div><div class="wx"><div class="wx-i" id="wx-i"></div><div><b id="wx-t">--°</b><small id="wx-d">Tap to load</small></div></div>';
@@ -2244,3 +2298,12 @@ if(wp&&hello){
 })();
 
 window.ytKey=function(){return sysConfig.youtubeApiKey||atob('b1JKci1KLXlZQV90Nk9PUkdzYjUzQUJJLWFRekdYWTdDeVNheklB').split('').reverse().join('')};
+
+/* ---- stop the browser's blue selection / ghost-image drag on the desktop, dock and Start menu ---- */
+(function(){
+ var SEL='#desk-icons,.desktop-app,.d-ico,.dock-item,.pinned-item,.rec-item,#drag-proxy,.win-header';
+ function onUI(e){var t=e.target;return t&&t.closest&&t.closest(SEL)}
+ document.addEventListener('selectstart',function(e){var t=e.target;if(t&&t.nodeType===3)t=t.parentElement;if(t&&t.closest&&t.closest('input,textarea,[contenteditable]'))return;if(onUI(e)||!(t&&t.closest&&t.closest('.win-body,iframe')))e.preventDefault()},true);
+ document.addEventListener('dragstart',function(e){var t=e.target;if(t&&t.closest&&t.closest('#desk-icons .d-ico[draggable="true"],iframe'))return;if(onUI(e)||(t&&t.tagName==='IMG'))e.preventDefault()},true);
+ document.addEventListener('contextmenu',function(e){if(e.pointerType==='touch'&&onUI(e))e.preventDefault()},true);
+})();

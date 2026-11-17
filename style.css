@@ -921,7 +921,7 @@ body.wm-drag iframe{pointer-events:none!important}
 .win-spin i:nth-child(2){animation-delay:.15s}.win-spin i:nth-child(3){animation-delay:.3s}.win-spin i:nth-child(4){animation-delay:.45s}.win-spin i:nth-child(5){animation-delay:.6s}
 @keyframes winSpin{0%{transform:rotate(0);opacity:1}45%{transform:rotate(240deg);opacity:1}75%{transform:rotate(540deg);opacity:1}100%{transform:rotate(720deg);opacity:0}}
 
-/* =====================  WINDOWS 11 SHELL (Cine look)  ===================== */
+/* =====================  MYTHOS SHELL (Cine look)  ===================== */
 #dock-container{left:0;right:0;bottom:0;transform:none!important;width:100%;height:48px;border-radius:0;border:0;border-top:1px solid rgba(255,255,255,.12);background:rgba(8,8,10,.78);backdrop-filter:blur(30px) saturate(1.4);-webkit-backdrop-filter:blur(30px) saturate(1.4);gap:4px;padding:0 90px}
 .dock-hidden{transform:none!important}
 .dock-item{width:42px;height:40px;border-radius:8px;flex:none}
@@ -979,7 +979,11 @@ body.wm-drag iframe{pointer-events:none!important}
 .d-ico img{width:46px;height:46px;filter:drop-shadow(0 4px 8px rgba(0,0,0,.55));pointer-events:none}
 .d-ico span{font:600 12.5px var(--font-main);color:#fff;text-align:center;text-shadow:0 1px 3px #000,0 0 8px rgba(0,0,0,.8);line-height:1.15;pointer-events:none}
 .d-ico:hover{background:rgba(255,255,255,.1)}
-.d-ico.sel{background:color-mix(in srgb,var(--accent) 28%,transparent);border-color:color-mix(in srgb,var(--accent) 70%,transparent)}
+.d-ico.sel{background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.16)}
+.d-ico,.d-ico *{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;outline:none}
+html.light .d-ico.sel{background:rgba(0,0,0,.1);border-color:rgba(0,0,0,.14)}
+.wx-marq{display:none!important}.desktop-app.msel{background:none!important;outline:0!important}
+.d-ico.drop{background:rgba(255,255,255,.2);border-color:rgba(255,255,255,.3)}html.light .d-ico.drop{background:rgba(0,0,0,.14);border-color:rgba(0,0,0,.2)}
 /* widgets */
 #wid-btn{position:fixed;left:0;bottom:0;height:48px;padding:0 14px;z-index:calc(var(--z-dock) + 1);display:flex;align-items:center;gap:10px;color:#fff;font-family:var(--font-main);cursor:pointer;border-radius:8px}
 #wid-btn:hover{background:rgba(255,255,255,.08)}#wid-btn svg{width:26px;height:26px}
@@ -1222,19 +1226,6 @@ html.light #os-ctx .qrow .q::after{background:#fff;color:#111;box-shadow:0 2px 8
 
 /* ---- OOBE dark mode ---- */
 #oobe,#oobe .ocard,#oobe .oin,#oobe .ovibe button,#oobe .ofonts button,#oobe .owps button,#oobe .otog,#oobe .opt,#oobe .otile,#oobe .oli,#oobe .olist{transition:background-color .35s,color .35s,border-color .35s}
-html:not(.light) #oobe{color:#f1f3f7;background:radial-gradient(ellipse 55% 45% at 50% -5%,#1d2f52 0%,transparent 100%),radial-gradient(ellipse 60% 50% at 50% 108%,#142a55 0%,transparent 100%),linear-gradient(180deg,#0c111b,#0a0e17)}
-html:not(.light) #oobe .ocard{background:linear-gradient(160deg,rgba(32,36,46,.95),rgba(22,26,35,.95));box-shadow:0 30px 80px rgba(0,0,0,.6),inset 0 0 0 1px rgba(255,255,255,.07)}
-html:not(.light) #oobe .ocard.fin{background:none;box-shadow:none;color:#e8eefc}
-html:not(.light) #oobe .ds,html:not(.light) #oobe .olab,html:not(.light) #oobe .olnk,html:not(.light) #oobe .ostat,html:not(.light) #oobe .wait p{color:#a9b3c4}
-html:not(.light) #oobe .opt,html:not(.light) #oobe .otile,html:not(.light) #oobe .olist,html:not(.light) #oobe .oin,html:not(.light) #oobe .ovibe button,html:not(.light) #oobe .ofonts button,html:not(.light) #oobe .owps button,html:not(.light) #oobe .otog,html:not(.light) #oobe .ocor button,html:not(.light) #oobe .oup,html:not(.light) #oobe .oaddf button,html:not(.light) #oobe .oaddf input:not([type=file]){background:#2a2f3b!important;color:#eef1f7!important;border-color:rgba(255,255,255,.14)!important}
-html:not(.light) #oobe .opt b,html:not(.light) #oobe .otile b,html:not(.light) #oobe .otog{color:#f1f3f7}
-html:not(.light) #oobe .oli:hover,html:not(.light) #oobe .opt:hover:not(.on),html:not(.light) #oobe .otile:hover:not(.on){background:#343a48}
-html:not(.light) #oobe .oin{border-bottom-color:#8a93a6}html:not(.light) #oobe .oin::placeholder{color:#8a93a6}
-html:not(.light) #oobe .bt .lm,html:not(.light) #oobe .olnk a{color:#7ab4ff}
-html:not(.light) #oobe .oback{background:rgba(255,255,255,.1);color:#fff}
-html:not(.light) #oobe .ovibe button.on,html:not(.light) #oobe .ofonts button.on,html:not(.light) #oobe .owps button.on,html:not(.light) #oobe .ocor button.on{border-color:var(--oacc,#4cc2ff)!important}
-html:not(.light) #oobe .ospin::before{border-color:#33415c;border-top-color:var(--oacc,#4cc2ff)}
-html:not(.light) #oobe .ill svg rect[fill="#fff"],html:not(.light) #oobe .ill svg rect[fill="#ffffff"]{fill:#2b3140}
 /* ---- OOBE avatar upload + Microsoft ---- */
 #oobe .oavu{display:flex;align-items:center;gap:16px;margin-top:16px}
 #oobe .oprev{width:84px;height:84px;border-radius:50%;flex:none;background:#c5d0e0 center/cover no-repeat;box-shadow:inset 0 0 0 1px rgba(0,0,0,.15),0 4px 14px rgba(0,0,0,.18);position:relative;overflow:hidden}
@@ -1319,3 +1310,151 @@ html.nocur,html.nocur *{cursor:auto}
 html .window.os-win.max{border-radius:0!important;border:0!important;box-shadow:none!important;outline:0!important}
 html .os-win.max .win-header,html .os-win.max .win-body,html .os-win.max .wc,html .os-win.max .wc.x,html .os-win.max iframe,html .os-win.max .win-body>*{border-radius:0!important}
 html .window.os-win.max{margin:0!important;min-width:0!important;min-height:0!important}
+
+/* ===== MythOS dialogs: Windows 11 (Fluent) look for Graphics quality + app loading ===== */
+.mq-ov{position:fixed;inset:0;z-index:99999999;display:grid;place-items:center;background:rgba(0,0,0,.45);font:14px "Segoe UI Variable Text","Segoe UI",system-ui,sans-serif;animation:mqFade .15s ease-out}
+.mq-dlg{width:min(480px,92vw);border-radius:8px;overflow:hidden;color:#fff;background:#2c2c2c;border:1px solid rgba(255,255,255,.08);box-shadow:0 32px 64px rgba(0,0,0,.37),0 2px 21px rgba(0,0,0,.3);animation:mqPop .2s cubic-bezier(.1,.9,.2,1)}
+.mq-body{padding:24px 24px 20px}
+.mq-dlg h2{margin:0 0 8px;font:600 20px/28px "Segoe UI Variable Display","Segoe UI",system-ui,sans-serif}
+.mq-dlg p{margin:0 0 18px;font-size:14px;line-height:20px;color:rgba(255,255,255,.78)}
+.mq-opts{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.mq-opt{display:flex;flex-direction:column;align-items:flex-start;gap:2px;padding:12px;text-align:left;cursor:pointer;color:inherit;font:inherit;border-radius:4px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);border-bottom-color:rgba(255,255,255,.14);transition:background .12s,border-color .12s}
+.mq-opt:hover{background:rgba(255,255,255,.09)}
+.mq-opt:active{background:rgba(255,255,255,.04);color:rgba(255,255,255,.7)}
+.mq-opt:focus-visible,.mq-btn:focus-visible{outline:2px solid #fff;outline-offset:-2px}
+.mq-opt b{font-weight:600;font-size:14px}
+.mq-opt small{font-size:12px;line-height:16px;color:rgba(255,255,255,.65)}
+.mq-opt.rec{border-color:var(--accent,#4cc2ff)}
+.mq-chk{display:flex;align-items:center;gap:8px;margin-top:18px;cursor:pointer;font-size:14px;user-select:none}
+.mq-chk input{appearance:none;-webkit-appearance:none;width:20px;height:20px;margin:0;border-radius:4px;border:1px solid rgba(255,255,255,.55);background:rgba(255,255,255,.04);display:grid;place-items:center;cursor:pointer}
+.mq-chk input:checked{background:var(--accent,#4cc2ff);border-color:var(--accent,#4cc2ff)}
+.mq-chk input:checked::after{content:"";width:5px;height:10px;border:solid #000;border-width:0 2px 2px 0;transform:translateY(-1px) rotate(45deg)}
+.mq-foot{display:flex;justify-content:flex-end;gap:8px;padding:20px 24px;background:#202020;border-top:1px solid rgba(0,0,0,.4)}
+.mq-btn{min-width:96px;padding:6px 16px;cursor:pointer;color:inherit;font:inherit;border-radius:4px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);border-bottom-color:rgba(255,255,255,.14)}
+.mq-btn:hover{background:rgba(255,255,255,.09)}
+html.light .mq-ov{background:rgba(0,0,0,.25)}
+html.light .mq-dlg{background:#f3f3f3;color:#1b1b1b;border-color:rgba(0,0,0,.06)}
+html.light .mq-dlg p,html.light .mq-opt small{color:rgba(0,0,0,.6)}
+html.light .mq-opt,html.light .mq-btn{background:#fbfbfb;border-color:rgba(0,0,0,.06);border-bottom-color:rgba(0,0,0,.16)}
+html.light .mq-opt:hover,html.light .mq-btn:hover{background:#f6f6f6}
+html.light .mq-foot{background:#e9e9e9;border-top-color:rgba(0,0,0,.08)}
+html.light .mq-chk input{border-color:rgba(0,0,0,.55);background:#fff}
+html.light .mq-chk input:checked::after{border-color:#fff}
+html.light .mq-opt:focus-visible,html.light .mq-btn:focus-visible{outline-color:#000}
+/* loading screen */
+.mq-load{position:fixed;inset:0;z-index:99999998;display:grid;place-items:center;color:#fff;font:14px "Segoe UI Variable Text","Segoe UI",system-ui,sans-serif;background:radial-gradient(120% 90% at 50% 0%,#1f2a3a 0%,#141414 60%);animation:mqFade .2s ease-out}
+html.light .mq-load{color:#1b1b1b;background:radial-gradient(120% 90% at 50% 0%,#e6eefb 0%,#f3f3f3 60%)}
+.mq-load>div{display:flex;flex-direction:column;align-items:center;width:min(320px,80vw);text-align:center}
+.mq-load img,.mq-load .mq-ph{width:72px;height:72px;border-radius:16px;object-fit:cover;box-shadow:0 8px 24px rgba(0,0,0,.35);animation:mqPop .35s cubic-bezier(.1,.9,.2,1)}
+.mq-load .mq-ph{display:grid;place-items:center;font:600 34px "Segoe UI Variable Display","Segoe UI",sans-serif;background:var(--accent,#4cc2ff);color:#000}
+.mq-load h3{margin:18px 0 2px;font:600 20px/28px "Segoe UI Variable Display","Segoe UI",system-ui,sans-serif}
+.mq-load .mq-q{font-size:12px;color:rgba(255,255,255,.6);margin-bottom:22px}
+html.light .mq-load .mq-q,html.light .mq-load .mq-t{color:rgba(0,0,0,.6)}
+.mq-bar{width:100%;height:3px;border-radius:2px;background:rgba(255,255,255,.18);overflow:hidden}
+html.light .mq-bar{background:rgba(0,0,0,.14)}
+.mq-bar i{display:block;height:100%;width:0;border-radius:2px;background:var(--accent,#4cc2ff);transition:width .12s linear}
+.mq-load .mq-t{margin-top:12px;min-height:16px;font-size:12px;color:rgba(255,255,255,.6)}
+@keyframes mqFade{from{opacity:0}to{opacity:1}}
+@keyframes mqPop{from{opacity:0;transform:scale(.96)}to{opacity:1;transform:none}}
+@media (max-width:420px){.mq-opts{grid-template-columns:1fr}}
+
+/* loading screen as a pop-up box (overrides full-screen look) */
+.mq-load,html.light .mq-load{background:rgba(0,0,0,.45)}
+html.light .mq-load{background:rgba(0,0,0,.25)}
+.mq-load>div{box-sizing:border-box;width:min(340px,88vw);padding:28px 28px 24px;border-radius:8px;background:#2c2c2c;border:1px solid rgba(255,255,255,.08);box-shadow:0 32px 64px rgba(0,0,0,.37),0 2px 21px rgba(0,0,0,.3);animation:mqPop .2s cubic-bezier(.1,.9,.2,1)}
+html.light .mq-load>div{background:#f3f3f3;border-color:rgba(0,0,0,.06)}
+.mq-load img,.mq-load .mq-ph{width:64px;height:64px;box-shadow:none}
+.mq-load h3{margin-top:14px}
+.mq-load .mq-q{margin-bottom:18px}
+
+/* MythOS black-hole logo */
+img.win-logo{object-fit:contain;width:110px;height:110px;filter:drop-shadow(0 0 18px rgba(255,255,255,.25))}
+.dock-start img{object-fit:contain;filter:drop-shadow(0 0 4px rgba(255,255,255,.3))}
+html.light .dock-start img{filter:invert(1)}
+.l-logo{display:block;margin:0 auto 14px;width:72px;height:72px;object-fit:contain;filter:drop-shadow(0 0 14px rgba(255,255,255,.3));animation:winIn .8s ease both}
+#lock-screen.lock-light .l-logo{filter:invert(1)}
+
+/* ===== OOBE: dark clear-glass look + blurred wallpaper backdrop ===== */
+#obg{position:absolute;inset:0;overflow:hidden;background:#05070b;z-index:0;transform:scale(1.12);filter:blur(34px) brightness(.42) saturate(1.25);transition:filter 1.6s ease,transform 1.6s ease,opacity .35s}
+#obg video,#obg img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:none}
+#oobe.unblur #obg{transform:scale(1);filter:none}
+#oobe .ocard,#oobe .ostat{z-index:2}
+#oobe.unblur .ocard,#oobe.unblur .ostat{opacity:0;transition:opacity .5s}
+#oobe .ocard::before{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;background:linear-gradient(120deg,rgba(255,255,255,.14),transparent 32%)}
+#oobe .owps i{overflow:hidden}#oobe .owps i video{width:100%;height:100%;object-fit:cover;display:block}
+
+
+/* ===================== MythOS setup (OOBE): clean dark + light themes ===================== */
+#oobe{--o-fg:#f3f5f9;--o-mut:rgba(243,245,249,.6);--o-card:rgba(12,13,17,.8);--o-line:rgba(255,255,255,.09);--o-field:rgba(255,255,255,.055);--o-field-h:rgba(255,255,255,.1);--o-seg-on:rgba(255,255,255,.13);--o-hero:radial-gradient(120% 90% at 20% 0%,color-mix(in srgb,var(--oacc,var(--accent,#4cc2ff)) 26%,transparent),transparent 62%),rgba(255,255,255,.03);--o-shadow:0 50px 120px rgba(0,0,0,.7);--o-acc:var(--oacc,var(--accent,#4cc2ff));--o-onacc:var(--onacc,#06121c);--o-err:#ff9d93;--o-sel:color-mix(in srgb,var(--o-acc) 16%,transparent);
+ background:#05070b;color:var(--o-fg);font-family:"Inter","Segoe UI Variable Text","Segoe UI",system-ui,sans-serif}
+html.light #oobe{--o-fg:#10131a;--o-mut:rgba(16,19,26,.62);--o-card:rgba(255,255,255,.72);--o-line:rgba(16,24,48,.1);--o-field:rgba(255,255,255,.62);--o-field-h:rgba(255,255,255,.96);--o-seg-on:#fff;--o-hero:radial-gradient(120% 90% at 20% 0%,color-mix(in srgb,var(--oacc,var(--accent,#2b7de9)) 30%,transparent),transparent 64%),rgba(255,255,255,.5);--o-shadow:0 40px 100px rgba(30,48,90,.24);--o-err:#c42b1c;--o-sel:color-mix(in srgb,var(--o-acc) 14%,transparent);background:#e9eef7}
+html.light #obg{filter:blur(34px) brightness(1.1) saturate(1.05)}
+html.light #oobe::after{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(180deg,rgba(255,255,255,.55),rgba(236,242,251,.35))}
+#oobe.unblur::after{opacity:0}
+#oobe,#oobe button,#oobe input{font-family:"Inter","Segoe UI Variable Text","Segoe UI",system-ui,sans-serif!important}
+html.os-font #oobe,html.os-font #oobe button,html.os-font #oobe input{font-family:var(--os-font)!important}
+#oobe .ocard{width:min(940px,94vw);min-height:min(560px,88vh);padding:14px;gap:0;border-radius:22px;background:var(--o-card);-webkit-backdrop-filter:blur(32px) saturate(1.4);backdrop-filter:blur(32px) saturate(1.4);border:1px solid var(--o-line);box-shadow:var(--o-shadow)}
+#oobe .ocard::before{display:none}
+#oobe .ocard.fin{background:none;border:0;box-shadow:none;-webkit-backdrop-filter:none;backdrop-filter:none;padding:0;color:var(--o-fg)}
+#oobe .ocard.center{padding:14px}
+#oobe .ill{border-radius:16px;background:var(--o-hero);border:1px solid var(--o-line);padding:18px;position:relative;overflow:hidden}
+#oobe .ill svg{filter:drop-shadow(0 18px 30px rgba(0,0,0,.28))}
+html:not(.light) #oobe .ill svg rect[fill="#fff"],html:not(.light) #oobe .ill svg rect[fill="#ffffff"]{fill:rgba(255,255,255,.14)}
+#oobe .rt{padding:34px 40px 26px 44px}
+#oobe h1{font-size:28px;font-weight:700;letter-spacing:-.6px;line-height:1.15;margin:0 0 10px;color:var(--o-fg)}
+#oobe .ds{font-size:14px;line-height:1.55;color:var(--o-mut);margin:0 0 24px}
+#oobe .olab,#oobe .olnk,#oobe .wait p,#oobe .otile span,#oobe .ofonts span{color:var(--o-mut)}
+#oobe .ostat{color:var(--o-mut)}
+/* fields + tiles */
+#oobe .oin{background:var(--o-field);color:var(--o-fg);border:1px solid var(--o-line);border-bottom:1px solid var(--o-line);border-radius:12px;padding:13px 15px;font-size:14.5px;outline:0;transition:border-color .15s,background .15s,box-shadow .15s}
+#oobe .oin::placeholder{color:var(--o-mut);opacity:.8}
+#oobe .oin:focus{border-color:var(--o-acc);box-shadow:0 0 0 3px color-mix(in srgb,var(--o-acc) 22%,transparent);background:var(--o-field-h)}
+#oobe .opt,#oobe .otile,#oobe .olist,#oobe .ovibe button,#oobe .ofonts button,#oobe .owps button,#oobe .ocor button,#oobe .otog,#oobe .oa,#oobe .oaddf input:not([type=file]){background:var(--o-field);border:1px solid var(--o-line);color:var(--o-fg);border-radius:12px;box-shadow:none}
+#oobe .opt b,#oobe .otile b,#oobe .otog,#oobe .ofonts b,#oobe .owps button,#oobe .ocor button,#oobe .ovibe button,#oobe .oli{color:var(--o-fg)}
+#oobe .opt:hover:not(.on),#oobe .otile:hover:not(.on),#oobe .ovibe button:hover:not(.on),#oobe .ofonts button:hover:not(.on),#oobe .owps button:hover:not(.on),#oobe .ocor button:hover:not(.on),#oobe .oli:hover,#oobe .oa:hover{background:var(--o-field-h)}
+#oobe .opt.on,#oobe .otile.on,#oobe .oli.on{background:var(--o-sel);border-color:var(--o-acc);color:var(--o-fg)}
+#oobe .opt.on b,#oobe .otile.on b{color:var(--o-fg)}#oobe .otile.on span{color:var(--o-mut)}
+#oobe .oli{border-left:0;border-radius:8px;margin:3px}
+#oobe .olist{padding:2px}
+#oobe .ovibe button.on,#oobe .ofonts button.on,#oobe .owps button.on,#oobe .ocor button.on,#oobe .oa.on{border:1px solid var(--o-acc)!important;background:var(--o-sel);box-shadow:0 0 0 1px var(--o-acc)}
+#oobe .oacc button,#oobe .opick{border:3px solid var(--o-card);box-shadow:0 0 0 1px var(--o-line)}#oobe .oacc button.on{box-shadow:0 0 0 2px var(--o-fg)}
+/* buttons */
+#oobe .bt{margin-top:auto;padding-top:26px;gap:18px}
+#oobe .bt .lm{color:var(--o-mut);font-weight:600;border-radius:10px;padding:10px 12px}#oobe .bt .lm:hover{color:var(--o-fg);background:var(--o-field)}
+#oobe .bt .ac{background:var(--o-acc);color:var(--o-onacc);border-radius:12px;padding:12px 34px;font-size:14px;font-weight:700;box-shadow:0 10px 26px color-mix(in srgb,var(--o-acc) 38%,transparent);transition:transform .12s,filter .12s}
+#oobe .bt .ac:hover{filter:brightness(1.07)}#oobe .bt .ac:active{transform:scale(.98)}
+#oobe .bt .ac.dis{background:var(--o-field);color:var(--o-mut);box-shadow:none}
+#oobe .olnk a{color:var(--o-acc);font-weight:600}
+#oobe .oback{background:var(--o-field);color:var(--o-fg);border:1px solid var(--o-line)}#oobe .oback:hover{background:var(--o-field-h)}
+#oobe .oerr{color:var(--o-err);font-size:12.5px}
+#oobe .ospin::before{border-color:var(--o-line);border-top-color:var(--o-acc)}
+#oobe .oup{background:var(--o-field);color:var(--o-fg);border:1px solid var(--o-line);border-radius:12px;font-weight:600;font-size:13.5px;padding:10px 16px;box-shadow:none}#oobe .oup:hover{background:var(--o-field-h);filter:none}
+#oobe .oprev{background-color:var(--o-field-h);box-shadow:inset 0 0 0 1px var(--o-line),0 8px 22px rgba(0,0,0,.22)}
+html.light #oobe .oprev:not(.has)::after{filter:invert(.45)}
+/* account picker (segmented) */
+#oobe .oseg{display:grid;grid-template-columns:1fr 1fr;gap:4px;padding:4px;margin:0 0 22px;border-radius:14px;background:var(--o-field);border:1px solid var(--o-line)}
+#oobe .oseg button{display:flex;align-items:center;justify-content:center;gap:9px;border:0;border-radius:10px;background:none;color:var(--o-mut);font-weight:600;font-size:13.5px;padding:11px 10px;cursor:pointer;transition:background .15s,color .15s,box-shadow .15s}
+#oobe .oseg button svg{width:17px;height:17px;flex:none}
+#oobe .oseg button.on{background:var(--o-seg-on);color:var(--o-fg);box-shadow:0 1px 2px rgba(0,0,0,.18),0 4px 14px rgba(0,0,0,.14)}
+#oobe .oseg button:not(.on):hover{color:var(--o-fg)}
+#oobe .oms{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;margin-top:0;padding:13px 16px;border-radius:12px;font-weight:600}
+#oobe .oms svg{flex:none}
+#oobe .onote{font-size:12.5px;line-height:1.5;color:var(--o-mut);margin:12px 2px 0}
+/* MythOS mark, top right */
+#oobe .omark{position:absolute;top:26px;right:30px;width:46px;height:46px;z-index:3;object-fit:contain;pointer-events:none;filter:drop-shadow(0 4px 14px rgba(0,0,0,.45));opacity:.95}
+html.light #oobe .omark{filter:invert(1) drop-shadow(0 2px 8px rgba(0,0,0,.18));opacity:.88}
+@media(max-width:760px){
+ #oobe .ocard{padding:8px;min-height:0;max-height:92vh;overflow:auto;border-radius:20px;top:54%}
+ #oobe .ill{display:none}#oobe .rt{padding:60px 22px 20px}
+ #oobe h1{font-size:23px}#oobe .ds{margin-bottom:18px}
+ #oobe .omark{top:16px;right:16px;width:38px;height:38px}
+ #oobe .bt{padding-top:18px}
+}
+
+/* ===== No blue selection/drag highlight (Safari, iOS, Firefox, touch) ===== */
+html,body,*{-webkit-user-select:none!important;-moz-user-select:none!important;-ms-user-select:none!important;user-select:none!important;-webkit-touch-callout:none!important;-webkit-tap-highlight-color:transparent!important}
+input,textarea,[contenteditable="true"],[contenteditable=""]{-webkit-user-select:text!important;-moz-user-select:text!important;user-select:text!important}
+::selection,::-moz-selection{background:transparent!important;color:inherit!important}
+input::selection,textarea::selection,[contenteditable]::selection{background:rgba(255,255,255,.25)!important}
+#desk-icons,#desk-icons *,.desktop-app,.desktop-app *,.dock-item,.dock-item *,.pinned-item,.pinned-item *,.rec-item,.rec-item *,#drag-proxy,#drag-proxy *{-webkit-user-drag:none!important;-webkit-user-select:none!important;user-select:none!important;-webkit-touch-callout:none!important;outline:none!important}
+img{-webkit-user-drag:none}

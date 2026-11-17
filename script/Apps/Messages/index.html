@@ -54,18 +54,18 @@ function tok(){return (P.sysConfig||{}).srvToken||''}
 function accent(){var a=(P.sysConfig||{}).accent;if(/^#[0-9a-f]{6}$/i.test(a||'')){document.documentElement.style.setProperty('--accent',a);var n=parseInt(a.slice(1),16),L=.299*(n>>16)+.587*((n>>8)&255)+.114*(n&255);document.documentElement.style.setProperty('--onacc',L<150?'#fff':'#000')}}
 function theme(){document.documentElement.classList.toggle('light',(P.sysConfig||{}).theme==='light')}
 function api(path,opt){opt=opt||{};opt.headers=Object.assign({'Content-Type':'application/json'},tok()?{Authorization:'Bearer '+tok()}:{},opt.headers||{});
- return fetch(base()+path,opt).then(function(r){return r.json().catch(function(){return{}}).then(function(j){if(!r.ok){var e=new Error(j.error||'Something went wrong.');e.code=r.status;throw e}return j})},function(){throw new Error('Can’t reach the Windows 11 server. Start it with start-server.bat / start-server.sh.')})}
+ return fetch(base()+path,opt).then(function(r){return r.json().catch(function(){return{}}).then(function(j){if(!r.ok){var e=new Error(j.error||'Something went wrong.');e.code=r.status;throw e}return j})},function(){throw new Error('Can’t reach the MythOS server. Start it with start-server.bat / start-server.sh.')})}
 var et=0;function err(t){var e=$('err');e.textContent=t;e.style.display='block';clearTimeout(et);et=setTimeout(function(){e.style.display='none'},4000)}
 function el(t,c,x){var e=document.createElement(t);if(c)e.className=c;if(x!=null)e.textContent=x;return e}
 function hhmm(t){var d=new Date(t);return d.toLocaleTimeString([],{hour:'numeric',minute:'2-digit'})}
 
 function signedOut(){cur=null;$('list').innerHTML='';$('mk').style.display='none';var m=$('main');m.innerHTML='';
- var w=el('div','empty');w.appendChild(el('h3',0,'Sign in to use Messages'));w.appendChild(el('p',0,'Messages are shared chat spaces hosted by this Windows 11. Sign in with your Microsoft account to join them, create your own and chat.'));
- var b=el('button','pri','Sign in with Microsoft');b.onclick=function(){b.disabled=true;P.msSignIn().then(function(a){if(!a.srvToken)throw new Error('Signed in, but the Windows 11 server couldn’t be reached. Check its address in Settings > Accounts.');P.msApply(a);boot()},function(e){err(e.message);b.disabled=false})};w.appendChild(b);m.appendChild(w)}
+ var w=el('div','empty');w.appendChild(el('h3',0,'Sign in to use Messages'));w.appendChild(el('p',0,'Messages are shared chat spaces hosted by this MythOS. Sign in with your Microsoft account to join them, create your own and chat.'));
+ var b=el('button','pri','Sign in with Microsoft');b.onclick=function(){b.disabled=true;P.msSignIn().then(function(a){if(!a.srvToken)throw new Error('Signed in, but the MythOS server couldn’t be reached. Check its address in Settings > Accounts.');P.msApply(a);boot()},function(e){err(e.message);b.disabled=false})};w.appendChild(b);m.appendChild(w)}
 
 function status(){return fetch(base()+'/api/status',{headers:tok()?{Authorization:'Bearer '+tok()}:{}}).then(function(r){return r.json()}).then(function(j){
   $('dot').className='dot on';var u=j.uptimeSec||0,t=u<90?u+'s':u<5400?Math.round(u/60)+' min':Math.round(u/3600)+' h';
-  $('stat').textContent='Windows 11 server online · up '+t+(j.accounts!=null?' · '+j.accounts+' account'+(j.accounts===1?'':'s'):'')},function(){$('dot').className='dot off';$('stat').textContent='Server offline'})}
+  $('stat').textContent='MythOS server online · up '+t+(j.accounts!=null?' · '+j.accounts+' account'+(j.accounts===1?'':'s'):'')},function(){$('dot').className='dot off';$('stat').textContent='Server offline'})}
 
 function drawList(){var l=$('list');l.innerHTML='';servers.forEach(function(s){var r=el('div','sv'+(cur&&cur.id===s.id?' on':''));r.appendChild(el('div','ic',s.name.slice(0,1).toUpperCase()));var d=el('div');d.appendChild(el('b',0,s.name));d.appendChild(el('small',0,s.count+(s.count===1?' message':' messages')));r.appendChild(d);r.onclick=function(){open(s)};l.appendChild(r)})}
 function loadList(){return api('/api/servers').then(function(j){servers=j.servers;if(cur){var f=servers.filter(function(s){return s.id===cur.id})[0];if(f)cur=f;else{cur=null;drawMain()}}drawList()})}
@@ -78,7 +78,7 @@ function drawMain(){var m=$('main');m.innerHTML='';
  var f=el('form','send'),i=el('input');i.placeholder='Message # '+cur.name;i.maxLength=500;i.autocomplete='off';f.appendChild(i);var b=el('button','pri','Send');b.type='submit';f.appendChild(b);
  f.onsubmit=function(e){e.preventDefault();var t=i.value.trim();if(!t)return;i.value='';api('/api/servers/'+cur.id+'/messages',{method:'POST',body:JSON.stringify({text:t})}).then(function(){poll()},function(er){err(er.message);i.value=t})};m.appendChild(f);i.focus()}
 function addMsgs(list){var box=$('msgs');if(!box)return;var stick=box.scrollHeight-box.scrollTop-box.clientHeight<60;
- list.forEach(function(x){if(seen[x.id])return;seen[x.id]=1;last=Math.max(last,x.id);var sys=x.u==='Windows 11',me=x.u===(P.sysConfig||{}).userName&&!sys;var r=el('div','m'+(me?' me':'')+(sys?' sys':''));
+ list.forEach(function(x){if(seen[x.id])return;seen[x.id]=1;last=Math.max(last,x.id);var sys=x.u==='MythOS',me=x.u===(P.sysConfig||{}).userName&&!sys;var r=el('div','m'+(me?' me':'')+(sys?' sys':''));
   r.appendChild(el('div','av',(x.u||'?').slice(0,1).toUpperCase()));var c=el('div'),h=el('div','h');h.appendChild(el('b',0,x.u));if(x.e==='owner')h.appendChild(el('i',0,'owner'));h.appendChild(el('span',0,hhmm(x.t)));c.appendChild(h);c.appendChild(el('div','x',x.text));r.appendChild(c);box.appendChild(r)});
  if(stick)box.scrollTop=box.scrollHeight}
 function poll(){if(!cur)return Promise.resolve();var id=cur.id;return api('/api/servers/'+id+'/messages?after='+last).then(function(j){if(!cur||cur.id!==id)return;addMsgs(j.messages)},function(e){if(e.code===401){signedOut();clearInterval(pollM)}})}

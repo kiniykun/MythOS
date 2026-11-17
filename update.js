@@ -1,4 +1,4 @@
-/* ===== Windows 11 Update: tells the user when their copy of this OS is outdated =====
+/* ===== MythOS Update: tells the user when their copy of this OS is outdated =====
    How it works: this file knows its own build number (OS_VERSION.build). It downloads
    version.json from the server (or from the "Update source" URL in Settings) and
    compares. When you publish a new version, bump BOTH the build in version.json and
@@ -16,7 +16,7 @@ window.OSUpdate={current:CUR,state:S,
   busy=fetch(url(),{cache:'no-store'}).then(function(r){if(!r.ok)throw new Error('The update server answered '+r.status+'.');return r.json()}).then(function(j){
     var b=Number(j&&j.build);if(!isFinite(b))throw new Error('That update source doesn’t look right (no build number).');
     S.remote=j;S.checked=Date.now();
-    if(b>CUR.build){S.state='available';if(!notified&&!manual||(manual&&!notified)){notified=true;try{showNotification('Windows 11 Update','Version '+(j.version||b)+' is available. Open Settings → Windows 11 Update to install it.')}catch(e){}}}
+    if(b>CUR.build){S.state='available';if(!notified&&!manual||(manual&&!notified)){notified=true;try{showNotification('MythOS Update','Version '+(j.version||b)+' is available. Open Settings → MythOS Update to install it.')}catch(e){}}}
     else S.state='latest';
     try{localStorage.setItem('win_upd_last',String(S.checked))}catch(e){}
   }).catch(function(e){S.state='error';S.checked=Date.now();
