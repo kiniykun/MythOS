@@ -74,7 +74,6 @@ jobs:
           else
             rsync -a "${EXCLUDES[@]}" "$SRC"/ ./
           fi
-          if [ -d "$SRC/.github" ]; then rsync -a "$SRC/.github/" ./.github/; fi
 
       - name: Remove the zip (optional)
         if: ${{ github.event.inputs.delete_zip == 'true' }}
